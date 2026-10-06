@@ -1,0 +1,7 @@
+# robots.txt — MOstavTY
+# TODO: Po nasazení na skutečnou domenu upravte adresu sitemapy níže.
+
+User-agent: *
+Allow: /
+
+Sitemap: https://www.mostavty.cz/sitemap.xml

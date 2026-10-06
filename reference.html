@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Reference — fotky našich rekonstrukcí | MOstavTY</title>
+<meta name="description" content="Fotografie dokončených rekonstrukcí bytů, domů a koupelen na Vysočině a v Praze. Všechny fotky jsou z našich vlastních zakázek.">
+<link rel="canonical" href="https://www.mostavty.cz/reference.html">
+
+<meta property="og:type" content="website">
+<meta property="og:locale" content="cs_CZ">
+<meta property="og:site_name" content="MOstavTY">
+<meta property="og:title" content="Reference — fotky našich rekonstrukcí">
+<meta property="og:description" content="Dokončené rekonstrukce bytů, domů a koupelen. Vysočina a Praha.">
+
+<meta name="theme-color" content="#1c1f24">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='5' fill='%231c1f24'/%3E%3Cpath d='M7 23V9l5 7 5-7v14' stroke='%23f07d1a' stroke-width='2.6' fill='none' stroke-linejoin='round'/%3E%3Cpath d='M21 23V9h4' stroke='%23fff' stroke-width='2.6' fill='none'/%3E%3C/svg%3E">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<a class="skip-link" href="#main">Přeskočit na obsah</a>
+
+<header class="header">
+  <div class="wrap header__inner">
+    <a class="logo" href="index.html" aria-label="MOstavTY — domovská stránka">
+      <svg class="logo__mark" width="34" height="34" viewBox="0 0 32 32" aria-hidden="true">
+        <rect width="32" height="32" rx="5" fill="#f07d1a"/>
+        <path d="M7 23V9l5 7 5-7v14" stroke="#1c1f24" stroke-width="2.6" fill="none" stroke-linejoin="round"/>
+        <path d="M21 23V9h4" stroke="#fff" stroke-width="2.6" fill="none"/>
+      </svg>
+      <span>MO<span class="logo__accent">stav</span>TY</span>
+    </a>
+
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav" aria-label="Otevřít menu">
+      <span class="nav-toggle__bar"></span>
+      <span class="nav-toggle__bar"></span>
+      <span class="nav-toggle__bar"></span>
+    </button>
+
+    <nav class="nav" id="nav" aria-label="Hlavní navigace">
+      <a class="nav__link" href="index.html">Úvod</a>
+      <a class="nav__link" href="sluzby.html">Služby</a>
+      <a class="nav__link" href="reference.html">Reference</a>
+      <a class="nav__link" href="o-nas.html">O nás</a>
+      <a class="nav__link" href="kontakt.html">Kontakt</a>
+      <span class="header__cta">
+        <a class="btn" href="tel:+420123456789">+420 123 456 789</a>
+      </span>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+  <section class="page-hero">
+    <div class="wrap">
+      <nav class="breadcrumb" aria-label="Drobečková navigace">
+        <ol>
+          <li><a href="index.html">Úvod</a></li>
+          <li><span aria-current="page">Reference</span></li>
+        </ol>
+      </nav>
+      <h1>Naše realizace</h1>
+      <p class="lead">
+        Všechny fotky jsou z našich vlastních zakázek. Nepoužíváme obrázky
+        z fotobanky — co vidíte, to jsme postavili.
+      </p>
+    </div>
+  </section>
+
+  <!-- ======================= GALERIE ======================= -->
+  <section class="section">
+    <div class="wrap">
+
+      <!-- Filtr kategorií -->
+      <div class="filter" role="group" aria-label="Filtr realizací podle typu">
+        <button class="filter__btn" type="button" data-filter="vse" aria-pressed="true">Vše</button>
+        <button class="filter__btn" type="button" data-filter="byty" aria-pressed="false">Byty</button>
+        <button class="filter__btn" type="button" data-filter="domy" aria-pressed="false">Domy</button>
+        <button class="filter__btn" type="button" data-filter="koupelny" aria-pressed="false">Koupelny</button>
+        <button class="filter__btn" type="button" data-filter="dilci" aria-pressed="false">Dílčí práce</button>
+      </div>
+
+      <p style="color:var(--c-text-soft);font-size:.95rem;margin-bottom:24px">
+        <span data-filter-count>9 realizací</span> · Kliknutím fotku zvětšíte
+      </p>
+
+      <!--
+        ====================== JAK PŘIDAT VLASTNÍ FOTKU ======================
+        1. Nahrajte fotku do img/reference/ (doporučeno: max 1600 px na delší
+           straně, JPG kvalita ~80, do 300 kB). Náhled můžete udělat menší.
+        2. Zkopírujte blok níže a upravte:
+
+        <a class="ref" href="img/reference/VELKA-FOTKA.jpg"
+           data-lightbox="img/reference/VELKA-FOTKA.jpg"
+           data-caption="Popis — město, rok"
+           data-category="byty">
+          <img src="img/reference/NAHLED.jpg" alt="Co je na fotce vidět"
+               width="600" height="450" loading="lazy">
+          <span class="ref__caption">
+            <span class="ref__title">Krátký název</span>
+            <span class="ref__meta">Typ zakázky · Rok</span>
+          </span>
+        </a>
+
+        3. data-category musí být jedna z: byty, domy, koupelny, dilci
+        4. Nezapomeňte na alt — popisuje fotku lidem, kteří ji nevidí.
+        ======================================================================
+      -->
+
+      <div class="gallery" data-gallery>
+
+        <!-- TODO: Nahraďte všech 9 placeholderů vlastními fotkami -->
+
+        <div class="ref" data-lightbox="#" data-caption="Byt 3+1, Jihlava — kompletní rekonstrukce včetně jádra, 2025" data-category="byty">
+          <div class="placeholder placeholder--dark">Byt 3+1 Jihlava</div>
+          <span class="ref__caption">
+            <span class="ref__title">Byt 3+1, Jihlava</span>
+            <span class="ref__meta">Kompletní rekonstrukce · 2025</span>
+          </span>
+        </div>
+
+        <div class="ref" data-lightbox="#" data-caption="Byt 2+kk, Praha 9 — rekonstrukce na klíč, 2025" data-category="byty">
+          <div class="placeholder placeholder--dark">Byt 2+kk Praha 9</div>
+          <span class="ref__caption">
+            <span class="ref__title">Byt 2+kk, Praha 9</span>
+            <span class="ref__meta">Rekonstrukce na klíč · 2025</span>
+          </span>
+        </div>
+
+        <div class="ref" data-lightbox="#" data-caption="Byt 4+1, Třebíč — nové rozvody, podlahy a koupelna, 2024" data-category="byty">
+          <div class="placeholder placeholder--dark">Byt 4+1 Třebíč</div>
+          <span class="ref__caption">
+            <span class="ref__title">Byt 4+1, Třebíč</span>
+            <span class="ref__meta">Kompletní rekonstrukce · 2024</span>
+          </span>
+        </div>
+
+        <div class="ref" data-lightbox="#" data-caption="Rodinný dům, Havlíčkův Brod — zateplení, střecha, interiér, 2024" data-category="domy">
+          <div class="placeholder placeholder--dark">Dům Havlíčkův Brod</div>
+          <span class="ref__caption">
+            <span class="ref__title">Rodinný dům, Havlíčkův Brod</span>
+            <span class="ref__meta">Rekonstrukce domu · 2024</span>
+          </span>
+        </div>
+
+        <div class="ref" data-lightbox="#" data-caption="Chalupa, Žďár nad Sázavou — sanace vlhkého zdiva a nová dispozice, 2024" data-category="domy">
+          <div class="placeholder placeholder--dark">Chalupa Žďár n. S.</div>
+          <span class="ref__caption">
+            <span class="ref__title">Chalupa, Žďár nad Sázavou</span>
+            <span class="ref__meta">Rekonstrukce + sanace · 2024</span>
+          </span>
+        </div>
+
+        <div class="ref" data-lightbox="#" data-caption="Řadový dům, Pelhřimov — podkroví, zateplení a fasáda, 2023" data-category="domy">
+          <div class="placeholder placeholder--dark">Řadovka Pelhřimov</div>
+          <span class="ref__caption">
+            <span class="ref__title">Řadový dům, Pelhřimov</span>
+            <span class="ref__meta">Podkroví a fasáda · 2023</span>
+          </span>
+        </div>
+
+        <div class="ref" data-lightbox="#" data-caption="Koupelna z umakartového jádra, Praha 4 — 2025" data-category="koupelny">
+          <div class="placeholder placeholder--dark">Koupelna Praha 4</div>
+          <span class="ref__caption">
+            <span class="ref__title">Koupelna, Praha 4</span>
+            <span class="ref__meta">Bytové jádro · 2025</span>
+          </span>
+        </div>
+
+        <div class="ref" data-lightbox="#" data-caption="Koupelna s walk-in sprchou, Jihlava — 2024" data-category="koupelny">
+          <div class="placeholder placeholder--dark">Koupelna Jihlava</div>
+          <span class="ref__caption">
+            <span class="ref__title">Koupelna, Jihlava</span>
+            <span class="ref__meta">Koupelna na míru · 2024</span>
+          </span>
+        </div>
+
+        <div class="ref" data-lightbox="#" data-caption="Sádrokartonové podhledy a štuky, Velké Meziříčí — 2025" data-category="dilci">
+          <div class="placeholder placeholder--dark">Podhledy V. Meziříčí</div>
+          <span class="ref__caption">
+            <span class="ref__title">Podhledy a štuky, Velké Meziříčí</span>
+            <span class="ref__meta">Dílčí práce · 2025</span>
+          </span>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================= PŘÍPADOVÁ STUDIE ======================= -->
+  <section class="section section--alt">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">Zakázka podrobně</p>
+        <h2>Jak vypadá rekonstrukce v praxi</h2>
+        <p class="lead">
+          Ukázka na konkrétní zakázce — ať víte, co od spolupráce čekat.
+        </p>
+      </div>
+
+      <!-- TODO: Vyměňte za svou skutečnou zakázku. Konkrétní čísla
+           a popis průběhu jsou to, co zákazníky nejvíc přesvědčí. -->
+      <div class="grid grid--2" style="align-items:start">
+        <div>
+          <h3>Byt 3+1, Jihlava — panelový dům, 68 m²</h3>
+          <p>
+            Majitelé koupili byt v původním stavu z 80. let. Chtěli otevřít
+            kuchyň do obývacího pokoje, vyměnit všechny rozvody a zbavit se
+            umakartového jádra.
+          </p>
+          <h4>Co jsme udělali</h4>
+          <ul class="checklist" style="font-size:.97rem">
+            <li>Vybourání jádra a nenosné příčky mezi kuchyní a pokojem</li>
+            <li>Nové rozvody vody, odpadů a elektřiny včetně rozvaděče</li>
+            <li>Zděná koupelna s walk-in sprchou a WC zvlášť</li>
+            <li>Sádrokartonové podhledy se zapuštěnými světly</li>
+            <li>Štuky na všech stěnách, vinylová podlaha v celém bytě</li>
+            <li>Nové interiérové dveře a obložkové zárubně</li>
+          </ul>
+          <h4>Výsledek</h4>
+          <p>
+            Hotovo za <strong>7 týdnů</strong>, rozpočet dodržen bez víceprací.
+            Majitelé se stěhovali týden po předání.
+          </p>
+          <div class="btn-row">
+            <a class="btn" href="kontakt.html?sluzba=rekonstrukce-bytu">Chci podobnou rekonstrukci</a>
+          </div>
+        </div>
+
+        <div class="grid" style="gap:14px">
+          <!-- TODO: Fotky před / po -->
+          <div class="placeholder" style="aspect-ratio:4/3;border-radius:8px">Fotka — stav před</div>
+          <div class="placeholder" style="aspect-ratio:4/3;border-radius:8px">Fotka — stav po</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================= CTA ======================= -->
+  <section class="cta-band">
+    <div class="wrap cta-band__inner">
+      <div>
+        <h2>Chcete vidět víc?</h2>
+        <p>
+          Rádi vás vezmeme na rozestavěnou zakázku, ať vidíte, jak pracujeme.
+          Stačí zavolat.
+        </p>
+      </div>
+      <a class="btn btn--lg" href="kontakt.html">Ozvat se</a>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <div class="wrap footer__main">
+    <div class="footer__about">
+      <a class="logo" href="index.html">
+        <svg class="logo__mark" width="32" height="32" viewBox="0 0 32 32" aria-hidden="true">
+          <rect width="32" height="32" rx="5" fill="#f07d1a"/>
+          <path d="M7 23V9l5 7 5-7v14" stroke="#1c1f24" stroke-width="2.6" fill="none" stroke-linejoin="round"/>
+          <path d="M21 23V9h4" stroke="#fff" stroke-width="2.6" fill="none"/>
+        </svg>
+        <span>MO<span class="logo__accent">stav</span>TY</span>
+      </a>
+      <p>
+        Stavební firma se specializací na kompletní rekonstrukce domů a bytů.
+        Působíme na Vysočině a v Praze.
+      </p>
+    </div>
+    <div>
+      <h4>Služby</h4>
+      <ul>
+        <li><a href="sluzby/rekonstrukce-bytu.html">Rekonstrukce bytu</a></li>
+        <li><a href="sluzby/rekonstrukce-domu.html">Rekonstrukce domu</a></li>
+        <li><a href="sluzby/sadrokarton.html">Sádrokartony</a></li>
+        <li><a href="sluzby/stuky-omitky.html">Štuky a omítky</a></li>
+        <li><a href="sluzby/podlahy.html">Podlahy</a></li>
+        <li><a href="sluzby.html">Všechny služby</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Firma</h4>
+      <ul>
+        <li><a href="o-nas.html">O nás</a></li>
+        <li><a href="reference.html">Reference</a></li>
+        <li><a href="kontakt.html">Kontakt</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Kontakt</h4>
+      <ul>
+        <li><a href="tel:+420123456789">+420 123 456 789</a></li>
+        <li><a href="mailto:info@mostavty.cz">info@mostavty.cz</a></li>
+        <li>Ulice 123, 586 01 Jihlava</li>
+        <li>IČO: 00000000</li>
+        <li>Po–Pá 7:00–17:00</li>
+      </ul>
+    </div>
+  </div>
+  <div class="wrap footer__bottom">
+    <p>&copy; <span data-year>2026</span> MOstavTY. Všechna práva vyhrazena.</p>
+    <div class="footer__legal">
+      <a href="ochrana-osobnich-udaju.html">Ochrana osobních údajů</a>
+    </div>
+  </div>
+</footer>
+
+<a class="call-fab" href="tel:+420123456789" aria-label="Zavolat">
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+    <path d="M6.6 10.8c1 2 2.6 3.6 4.6 4.6l2.3-2.3c.3-.3.7-.4 1.1-.3 1.1.4 2.3.6 3.5.6.6 0 1 .4 1 1V18c0 .6-.4 1-1 1-8.3 0-15-6.7-15-15 0-.6.4-1 1-1h3.6c.6 0 1 .4 1 1 0 1.2.2 2.4.6 3.5.1.4 0 .8-.3 1.1z"/>
+  </svg>
+  Zavolat
+</a>
+
+<script src="js/main.js" defer></script>
+</body>
+</html>
