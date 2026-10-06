@@ -8,10 +8,10 @@
   'use strict';
 
   /* --- Konfigurace ------------------------------------------------------ */
-  // TODO: Zaregistrujte se na https://web3forms.com (zdarma), zkopírujte
-  // Access Key a vložte ho sem. Do té doby formulář běží v testovacím
-  // režimu — data se neodešlou, jen se vypíšou do konzole.
-  var WEB3FORMS_KEY = 'VLOZTE-SVUJ-ACCESS-KEY';
+  // Access Key z https://web3forms.com — na něj je navázaný e-mail, kam
+  // chodí poptávky z formuláře. Pokud byste chtěli adresu změnit, udělá
+  // se to v účtu Web3Forms, ne tady.
+  var WEB3FORMS_KEY = 'faaf9da8-8a22-444e-a782-af08c1c1ed9d';
 
   var ready = function (fn) {
     if (document.readyState !== 'loading') { fn(); }

@@ -450,6 +450,11 @@ p:last-child { margin-bottom: 0; }
 
 .card__media img, .card__media svg { width: 100%; height: 100%; object-fit: cover; }
 
+/* Portréty v sekci týmu jsou na výšku (4:5) — širší poměr karty by je
+   oříznul přes obličej, proto jim dáváme vlastní. */
+.card--person .card__media { aspect-ratio: 4 / 5; }
+.card--person .card__media img { object-position: center 22%; }
+
 .card__body { display: flex; flex-direction: column; flex: 1; padding: 24px; }
 
 .card__icon {

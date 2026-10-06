@@ -61,8 +61,29 @@ To je záměr, aby se neztrácely poptávky kvůli nenastavené službě.
 
 ### 3. Fotky (velmi důležité)
 
-Tohle je na webu stavební firmy to, co nejvíc rozhoduje. Šedé šrafované
-plochy jsou placeholdery, kde mají být vaše fotky.
+Tohle je na webu stavební firmy to, co nejvíc rozhoduje.
+
+**Web má zatím ilustrační fotky** — hero na úvodu, 9 realizací v galerii
+a fotky na podstránkách služeb. Jsou stažené z [Unsplash](https://unsplash.com)
+pod [Unsplash License](https://unsplash.com/license), která dovoluje
+i komerční použití bez uvedení autora. Pro školní projekt stačí, pro ostrý
+provoz je nahraďte vlastními — zákazník pozná fotobanku od skutečné práce.
+
+Portréty v sekci týmu na [o-nas.html](o-nas.html) vygeneroval model
+StyleGAN2 ([thispersondoesnotexist.com](https://thispersondoesnotexist.com)).
+Nejsou to skuteční lidé, takže nikoho nezobrazují.
+
+Kde fotky vyměnit:
+
+| Co | Soubor |
+|---|---|
+| Hero na úvodu | `img/hero-rekonstrukce.jpg` (1920×1080) |
+| Galerie realizací | `img/reference/*.jpg` (800×600) |
+| Podstránky služeb | `img/sluzby/*.jpg` (640×800) |
+| Tým | `img/tym/*.jpg` (600×750) |
+
+Stačí přepsat soubor stejným názvem — v HTML se nic měnit nemusí. Jen
+nezapomeňte upravit `alt` popisky, aby odpovídaly nové fotce.
 
 Kam je nahrát:
 

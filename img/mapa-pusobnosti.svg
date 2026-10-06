@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 400" role="img"
+     aria-labelledby="mapa-nadpis mapa-popis">
+  <title id="mapa-nadpis">Oblast působení firmy MOstavTY</title>
+  <desc id="mapa-popis">Schematická mapa: kraj Vysočina s městy Jihlava, Třebíč,
+    Havlíčkův Brod, Žďár nad Sázavou, Pelhřimov, Velké Meziříčí, Humpolec a Telč,
+    a severozápadně od něj Praha.</desc>
+
+  <defs>
+    <style>
+      .kraj      { fill: #fff3e7; stroke: #f07d1a; stroke-width: 2.5; }
+      .okoli     { fill: #eceef1; stroke: #d8dce2; stroke-width: 1.5; }
+      .spoj      { stroke: #f07d1a; stroke-width: 2; stroke-dasharray: 7 6; fill: none; }
+      .mesto     { fill: #d46a0d; }
+      .mesto-hl  { fill: #f07d1a; stroke: #fff; stroke-width: 2.5; }
+      .popis     { font-family: "Barlow Condensed", "Barlow", system-ui, sans-serif;
+                   font-size: 15px; font-weight: 600; fill: #22262c; }
+      .popis-hl  { font-size: 19px; font-weight: 700; }
+      .popis-inv { fill: #5d646e; font-size: 14px; }
+      .nadpis    { font-family: "Barlow Condensed", "Barlow", system-ui, sans-serif;
+                   font-size: 13px; font-weight: 600; letter-spacing: .14em;
+                   text-transform: uppercase; fill: #f07d1a; }
+    </style>
+  </defs>
+
+  <rect width="640" height="400" fill="#f8f9fa"/>
+
+  <!-- obrys sousedních oblastí (schematicky, jen pro kontext) -->
+  <path class="okoli" d="M20 92 L150 58 L232 96 L214 168 L96 196 L28 160 Z"/>
+  <path class="okoli" d="M402 232 L532 206 L612 262 L578 344 L446 352 L396 300 Z"/>
+
+  <!-- kraj Vysočina -->
+  <path class="kraj" d="M196 150
+                        L296 118
+                        L404 142
+                        L452 206
+                        L430 282
+                        L338 330
+                        L236 312
+                        L182 248
+                        Z"/>
+
+  <!-- spojnice Vysočina – Praha -->
+  <path class="spoj" d="M250 168 C 212 128, 176 102, 146 86"/>
+
+  <!-- Praha -->
+  <circle class="mesto-hl" cx="134" cy="80" r="9"/>
+  <text class="popis popis-hl" x="134" y="58" text-anchor="middle">PRAHA</text>
+
+  <!-- města Vysočiny -->
+  <circle class="mesto" cx="300" cy="222" r="7.5"/>
+  <text class="popis popis-hl" x="300" y="248" text-anchor="middle">JIHLAVA</text>
+
+  <circle class="mesto" cx="268" cy="166" r="5"/>
+  <text class="popis" x="262" y="152" text-anchor="middle">Havlíčkův Brod</text>
+
+  <circle class="mesto" cx="366" cy="186" r="5"/>
+  <text class="popis" x="372" y="176" text-anchor="middle">Žďár n. S.</text>
+
+  <circle class="mesto" cx="222" cy="214" r="5"/>
+  <text class="popis" x="206" y="206" text-anchor="end">Pelhřimov</text>
+
+  <circle class="mesto" cx="214" cy="178" r="4.5"/>
+  <text class="popis" x="200" y="172" text-anchor="end">Humpolec</text>
+
+  <circle class="mesto" cx="378" cy="244" r="5"/>
+  <text class="popis" x="392" y="240" text-anchor="start">Velké Meziříčí</text>
+
+  <circle class="mesto" cx="358" cy="288" r="5"/>
+  <text class="popis" x="372" y="300" text-anchor="start">Třebíč</text>
+
+  <circle class="mesto" cx="282" cy="294" r="4.5"/>
+  <text class="popis" x="282" y="314" text-anchor="middle">Telč</text>
+
+  <!-- popisky oblastí -->
+  <text class="nadpis" x="316" y="200" text-anchor="middle">Kraj Vysočina</text>
+  <text class="popis popis-inv" x="112" y="104" text-anchor="middle">výjezdy na zakázku</text>
+</svg>
