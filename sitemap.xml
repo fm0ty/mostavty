@@ -1,74 +1,340 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  Sitemap pro MOstavTY.
-  TODO: Po nasazení nahraďte doménu www.mostavty.cz svou skutečnou adresou
-        a aktualizujte <lastmod> při větších změnách obsahu.
+  Sitemap pro MOstavTY — tri jazykove mutace (cs / en / de).
+  Kazda URL uvadi pres xhtml:link i sve varianty v ostatnich jazycich.
+  TODO: Po nasazeni nahradte domenu www.mostavty.cz svou skutecnou adresou
+        a aktualizujte <lastmod> pri vetsich zmenach obsahu.
 -->
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
 
   <url>
     <loc>https://www.mostavty.cz/</loc>
-    <lastmod>2026-10-06</lastmod>
+    <xhtml:link rel="alternate" hreflang="cs" href="https://www.mostavty.cz/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.mostavty.cz/en/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.mostavty.cz/de/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.mostavty.cz/"/>
+    <lastmod>2026-10-08</lastmod>
+    <priority>1.0</priority>
+  </url>
+
+  <url>
+    <loc>https://www.mostavty.cz/en/</loc>
+    <xhtml:link rel="alternate" hreflang="cs" href="https://www.mostavty.cz/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.mostavty.cz/en/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.mostavty.cz/de/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.mostavty.cz/"/>
+    <lastmod>2026-10-08</lastmod>
+    <priority>1.0</priority>
+  </url>
+
+  <url>
+    <loc>https://www.mostavty.cz/de/</loc>
+    <xhtml:link rel="alternate" hreflang="cs" href="https://www.mostavty.cz/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.mostavty.cz/en/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.mostavty.cz/de/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.mostavty.cz/"/>
+    <lastmod>2026-10-08</lastmod>
     <priority>1.0</priority>
   </url>
 
   <url>
     <loc>https://www.mostavty.cz/sluzby.html</loc>
-    <lastmod>2026-10-06</lastmod>
+    <xhtml:link rel="alternate" hreflang="cs" href="https://www.mostavty.cz/sluzby.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.mostavty.cz/en/services.html"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.mostavty.cz/de/leistungen.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.mostavty.cz/sluzby.html"/>
+    <lastmod>2026-10-08</lastmod>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://www.mostavty.cz/en/services.html</loc>
+    <xhtml:link rel="alternate" hreflang="cs" href="https://www.mostavty.cz/sluzby.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.mostavty.cz/en/services.html"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.mostavty.cz/de/leistungen.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.mostavty.cz/sluzby.html"/>
+    <lastmod>2026-10-08</lastmod>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://www.mostavty.cz/de/leistungen.html</loc>
+    <xhtml:link rel="alternate" hreflang="cs" href="https://www.mostavty.cz/sluzby.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.mostavty.cz/en/services.html"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.mostavty.cz/de/leistungen.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.mostavty.cz/sluzby.html"/>
+    <lastmod>2026-10-08</lastmod>
     <priority>0.9</priority>
   </url>
 
   <url>
     <loc>https://www.mostavty.cz/sluzby/rekonstrukce-bytu.html</loc>
-    <lastmod>2026-10-06</lastmod>
+    <xhtml:link rel="alternate" hreflang="cs" href="https://www.mostavty.cz/sluzby/rekonstrukce-bytu.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.mostavty.cz/en/services/flat-renovation.html"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.mostavty.cz/de/leistungen/wohnungssanierung.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.mostavty.cz/sluzby/rekonstrukce-bytu.html"/>
+    <lastmod>2026-10-08</lastmod>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://www.mostavty.cz/en/services/flat-renovation.html</loc>
+    <xhtml:link rel="alternate" hreflang="cs" href="https://www.mostavty.cz/sluzby/rekonstrukce-bytu.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.mostavty.cz/en/services/flat-renovation.html"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.mostavty.cz/de/leistungen/wohnungssanierung.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.mostavty.cz/sluzby/rekonstrukce-bytu.html"/>
+    <lastmod>2026-10-08</lastmod>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://www.mostavty.cz/de/leistungen/wohnungssanierung.html</loc>
+    <xhtml:link rel="alternate" hreflang="cs" href="https://www.mostavty.cz/sluzby/rekonstrukce-bytu.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.mostavty.cz/en/services/flat-renovation.html"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.mostavty.cz/de/leistungen/wohnungssanierung.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.mostavty.cz/sluzby/rekonstrukce-bytu.html"/>
+    <lastmod>2026-10-08</lastmod>
     <priority>0.9</priority>
   </url>
 
   <url>
     <loc>https://www.mostavty.cz/sluzby/rekonstrukce-domu.html</loc>
-    <lastmod>2026-10-06</lastmod>
+    <xhtml:link rel="alternate" hreflang="cs" href="https://www.mostavty.cz/sluzby/rekonstrukce-domu.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.mostavty.cz/en/services/house-renovation.html"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.mostavty.cz/de/leistungen/haussanierung.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.mostavty.cz/sluzby/rekonstrukce-domu.html"/>
+    <lastmod>2026-10-08</lastmod>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://www.mostavty.cz/en/services/house-renovation.html</loc>
+    <xhtml:link rel="alternate" hreflang="cs" href="https://www.mostavty.cz/sluzby/rekonstrukce-domu.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.mostavty.cz/en/services/house-renovation.html"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.mostavty.cz/de/leistungen/haussanierung.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.mostavty.cz/sluzby/rekonstrukce-domu.html"/>
+    <lastmod>2026-10-08</lastmod>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://www.mostavty.cz/de/leistungen/haussanierung.html</loc>
+    <xhtml:link rel="alternate" hreflang="cs" href="https://www.mostavty.cz/sluzby/rekonstrukce-domu.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.mostavty.cz/en/services/house-renovation.html"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.mostavty.cz/de/leistungen/haussanierung.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.mostavty.cz/sluzby/rekonstrukce-domu.html"/>
+    <lastmod>2026-10-08</lastmod>
     <priority>0.9</priority>
   </url>
 
   <url>
     <loc>https://www.mostavty.cz/sluzby/sadrokarton.html</loc>
-    <lastmod>2026-10-06</lastmod>
+    <xhtml:link rel="alternate" hreflang="cs" href="https://www.mostavty.cz/sluzby/sadrokarton.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.mostavty.cz/en/services/plasterboard.html"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.mostavty.cz/de/leistungen/trockenbau.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.mostavty.cz/sluzby/sadrokarton.html"/>
+    <lastmod>2026-10-08</lastmod>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://www.mostavty.cz/en/services/plasterboard.html</loc>
+    <xhtml:link rel="alternate" hreflang="cs" href="https://www.mostavty.cz/sluzby/sadrokarton.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.mostavty.cz/en/services/plasterboard.html"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.mostavty.cz/de/leistungen/trockenbau.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.mostavty.cz/sluzby/sadrokarton.html"/>
+    <lastmod>2026-10-08</lastmod>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://www.mostavty.cz/de/leistungen/trockenbau.html</loc>
+    <xhtml:link rel="alternate" hreflang="cs" href="https://www.mostavty.cz/sluzby/sadrokarton.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.mostavty.cz/en/services/plasterboard.html"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.mostavty.cz/de/leistungen/trockenbau.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.mostavty.cz/sluzby/sadrokarton.html"/>
+    <lastmod>2026-10-08</lastmod>
     <priority>0.8</priority>
   </url>
 
   <url>
     <loc>https://www.mostavty.cz/sluzby/stuky-omitky.html</loc>
-    <lastmod>2026-10-06</lastmod>
+    <xhtml:link rel="alternate" hreflang="cs" href="https://www.mostavty.cz/sluzby/stuky-omitky.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.mostavty.cz/en/services/plastering.html"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.mostavty.cz/de/leistungen/verputzarbeiten.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.mostavty.cz/sluzby/stuky-omitky.html"/>
+    <lastmod>2026-10-08</lastmod>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://www.mostavty.cz/en/services/plastering.html</loc>
+    <xhtml:link rel="alternate" hreflang="cs" href="https://www.mostavty.cz/sluzby/stuky-omitky.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.mostavty.cz/en/services/plastering.html"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.mostavty.cz/de/leistungen/verputzarbeiten.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.mostavty.cz/sluzby/stuky-omitky.html"/>
+    <lastmod>2026-10-08</lastmod>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://www.mostavty.cz/de/leistungen/verputzarbeiten.html</loc>
+    <xhtml:link rel="alternate" hreflang="cs" href="https://www.mostavty.cz/sluzby/stuky-omitky.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.mostavty.cz/en/services/plastering.html"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.mostavty.cz/de/leistungen/verputzarbeiten.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.mostavty.cz/sluzby/stuky-omitky.html"/>
+    <lastmod>2026-10-08</lastmod>
     <priority>0.8</priority>
   </url>
 
   <url>
     <loc>https://www.mostavty.cz/sluzby/podlahy.html</loc>
-    <lastmod>2026-10-06</lastmod>
+    <xhtml:link rel="alternate" hreflang="cs" href="https://www.mostavty.cz/sluzby/podlahy.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.mostavty.cz/en/services/flooring.html"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.mostavty.cz/de/leistungen/bodenbelaege.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.mostavty.cz/sluzby/podlahy.html"/>
+    <lastmod>2026-10-08</lastmod>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://www.mostavty.cz/en/services/flooring.html</loc>
+    <xhtml:link rel="alternate" hreflang="cs" href="https://www.mostavty.cz/sluzby/podlahy.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.mostavty.cz/en/services/flooring.html"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.mostavty.cz/de/leistungen/bodenbelaege.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.mostavty.cz/sluzby/podlahy.html"/>
+    <lastmod>2026-10-08</lastmod>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://www.mostavty.cz/de/leistungen/bodenbelaege.html</loc>
+    <xhtml:link rel="alternate" hreflang="cs" href="https://www.mostavty.cz/sluzby/podlahy.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.mostavty.cz/en/services/flooring.html"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.mostavty.cz/de/leistungen/bodenbelaege.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.mostavty.cz/sluzby/podlahy.html"/>
+    <lastmod>2026-10-08</lastmod>
     <priority>0.8</priority>
   </url>
 
   <url>
     <loc>https://www.mostavty.cz/reference.html</loc>
-    <lastmod>2026-10-06</lastmod>
+    <xhtml:link rel="alternate" hreflang="cs" href="https://www.mostavty.cz/reference.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.mostavty.cz/en/projects.html"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.mostavty.cz/de/referenzen.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.mostavty.cz/reference.html"/>
+    <lastmod>2026-10-08</lastmod>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://www.mostavty.cz/en/projects.html</loc>
+    <xhtml:link rel="alternate" hreflang="cs" href="https://www.mostavty.cz/reference.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.mostavty.cz/en/projects.html"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.mostavty.cz/de/referenzen.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.mostavty.cz/reference.html"/>
+    <lastmod>2026-10-08</lastmod>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://www.mostavty.cz/de/referenzen.html</loc>
+    <xhtml:link rel="alternate" hreflang="cs" href="https://www.mostavty.cz/reference.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.mostavty.cz/en/projects.html"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.mostavty.cz/de/referenzen.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.mostavty.cz/reference.html"/>
+    <lastmod>2026-10-08</lastmod>
     <priority>0.8</priority>
   </url>
 
   <url>
     <loc>https://www.mostavty.cz/o-nas.html</loc>
-    <lastmod>2026-10-06</lastmod>
+    <xhtml:link rel="alternate" hreflang="cs" href="https://www.mostavty.cz/o-nas.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.mostavty.cz/en/about.html"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.mostavty.cz/de/ueber-uns.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.mostavty.cz/o-nas.html"/>
+    <lastmod>2026-10-08</lastmod>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://www.mostavty.cz/en/about.html</loc>
+    <xhtml:link rel="alternate" hreflang="cs" href="https://www.mostavty.cz/o-nas.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.mostavty.cz/en/about.html"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.mostavty.cz/de/ueber-uns.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.mostavty.cz/o-nas.html"/>
+    <lastmod>2026-10-08</lastmod>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://www.mostavty.cz/de/ueber-uns.html</loc>
+    <xhtml:link rel="alternate" hreflang="cs" href="https://www.mostavty.cz/o-nas.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.mostavty.cz/en/about.html"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.mostavty.cz/de/ueber-uns.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.mostavty.cz/o-nas.html"/>
+    <lastmod>2026-10-08</lastmod>
     <priority>0.7</priority>
   </url>
 
   <url>
     <loc>https://www.mostavty.cz/kontakt.html</loc>
-    <lastmod>2026-10-06</lastmod>
+    <xhtml:link rel="alternate" hreflang="cs" href="https://www.mostavty.cz/kontakt.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.mostavty.cz/en/contact.html"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.mostavty.cz/de/kontakt.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.mostavty.cz/kontakt.html"/>
+    <lastmod>2026-10-08</lastmod>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://www.mostavty.cz/en/contact.html</loc>
+    <xhtml:link rel="alternate" hreflang="cs" href="https://www.mostavty.cz/kontakt.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.mostavty.cz/en/contact.html"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.mostavty.cz/de/kontakt.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.mostavty.cz/kontakt.html"/>
+    <lastmod>2026-10-08</lastmod>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://www.mostavty.cz/de/kontakt.html</loc>
+    <xhtml:link rel="alternate" hreflang="cs" href="https://www.mostavty.cz/kontakt.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.mostavty.cz/en/contact.html"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.mostavty.cz/de/kontakt.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.mostavty.cz/kontakt.html"/>
+    <lastmod>2026-10-08</lastmod>
     <priority>0.9</priority>
   </url>
 
   <url>
     <loc>https://www.mostavty.cz/ochrana-osobnich-udaju.html</loc>
-    <lastmod>2026-10-06</lastmod>
+    <xhtml:link rel="alternate" hreflang="cs" href="https://www.mostavty.cz/ochrana-osobnich-udaju.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.mostavty.cz/en/privacy.html"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.mostavty.cz/de/datenschutz.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.mostavty.cz/ochrana-osobnich-udaju.html"/>
+    <lastmod>2026-10-08</lastmod>
+    <priority>0.2</priority>
+  </url>
+
+  <url>
+    <loc>https://www.mostavty.cz/en/privacy.html</loc>
+    <xhtml:link rel="alternate" hreflang="cs" href="https://www.mostavty.cz/ochrana-osobnich-udaju.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.mostavty.cz/en/privacy.html"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.mostavty.cz/de/datenschutz.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.mostavty.cz/ochrana-osobnich-udaju.html"/>
+    <lastmod>2026-10-08</lastmod>
+    <priority>0.2</priority>
+  </url>
+
+  <url>
+    <loc>https://www.mostavty.cz/de/datenschutz.html</loc>
+    <xhtml:link rel="alternate" hreflang="cs" href="https://www.mostavty.cz/ochrana-osobnich-udaju.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.mostavty.cz/en/privacy.html"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.mostavty.cz/de/datenschutz.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.mostavty.cz/ochrana-osobnich-udaju.html"/>
+    <lastmod>2026-10-08</lastmod>
     <priority>0.2</priority>
   </url>
 

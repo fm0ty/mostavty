@@ -1,7 +1,14 @@
 # robots.txt — MOstavTY
-# TODO: Po nasazení na skutečnou domenu upravte adresu sitemapy níže.
+# TODO: Po nasazení na skutečnou doménu upravte adresu sitemapy níže.
 
 User-agent: *
 Allow: /
+
+# Interní stránka s podklady pro inzerci — není pro veřejnost.
+# Pozn.: robots.txt je veřejně čitelný a slušné roboty jen požádá, aby
+# stránku neindexovali. Kdo adresu zná, otevře si ji. Stránka má navíc
+# v hlavičce noindex. Pokud by měla být opravdu chráněná, je potřeba
+# heslo na úrovni hostingu (.htaccess / basic auth).
+Disallow: /inzeraty-interni.html
 
 Sitemap: https://www.mostavty.cz/sitemap.xml

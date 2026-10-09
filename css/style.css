@@ -265,6 +265,33 @@ p:last-child { margin-bottom: 0; }
 
 .header__cta { margin-left: 8px; }
 
+/* --- Přepínač jazyků ----------------------------------------------------- */
+.lang {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  margin-left: 10px;
+  padding-left: 12px;
+  border-left: 1px solid var(--c-dark-line);
+}
+
+.lang__link {
+  padding: .35em .5em;
+  font-family: var(--font-head);
+  font-size: .92rem;
+  font-weight: 700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--c-text-invert-soft);
+  text-decoration: none;
+  border-radius: var(--radius);
+  transition: color .18s var(--ease), background .18s var(--ease);
+}
+
+.lang__link:hover { color: #fff; background: rgba(255,255,255,.1); text-decoration: none; }
+
+.lang__link[aria-current="true"] { color: var(--c-dark); background: var(--c-accent); }
+
 /* Hamburger */
 .nav-toggle {
   display: none;
@@ -1095,6 +1122,22 @@ a.tag:hover { background: var(--c-accent-soft); border-color: var(--c-accent); t
 
   .header__cta { margin: 18px 0 0; }
   .header__cta .btn { width: 100%; }
+
+  /* V rozbaleném menu jazyky na celou šířku, ne jako úzký sloupec */
+  .lang {
+    margin: 16px 0 0;
+    padding: 14px 0 0;
+    border-left: 0;
+    border-top: 1px solid var(--c-dark-line);
+    gap: 8px;
+  }
+  .lang__link {
+    flex: 1;
+    text-align: center;
+    padding: .7em .5em;
+    font-size: 1.02rem;
+    border: 1px solid var(--c-dark-line);
+  }
 
   .checklist--cols { columns: 1; }
 

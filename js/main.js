@@ -18,6 +18,84 @@
     else { document.addEventListener('DOMContentLoaded', fn); }
   };
 
+  /* --- Hlášky formuláře podle jazyka stránky ----------------------------
+     Jazyk se bere z <html lang="…">. Chybí-li překlad, použije se čeština. */
+  var STRINGS = {
+    cs: {
+      required:  'Toto pole je povinné.',
+      consent:   'Bez souhlasu nemůžeme zprávu zpracovat.',
+      email:     'Zadejte e-mail ve formátu jmeno@domena.cz',
+      phone:     'Zadejte telefon včetně předvolby, např. +420 123 456 789',
+      short:     'Napište prosím alespoň pár slov (min. 10 znaků).',
+      checkForm: 'Zkontrolujte prosím zvýrazněná pole.',
+      sending:   'Odesílám zprávu…',
+      sendingBtn:'Odesílám…',
+      okQuiet:   'Děkujeme, zpráva byla odeslána.',
+      ok:        'Děkujeme! Zprávu jsme dostali a ozveme se do jednoho pracovního dne.',
+      failed:    'Zprávu se nepodařilo odeslat. Zkuste to prosím znovu, nebo nám zavolejte.',
+      offline:   'Zprávu se nepodařilo odeslat — zkontrolujte připojení, nebo nám prosím zavolejte.',
+      testMode:  'Testovací režim: formulář je funkční, ale chybí Web3Forms klíč (viz js/main.js). Data jsou vypsaná v konzoli prohlížeče.',
+      subject:   'Nová poptávka z webu MOstavTY',
+      count1:    '1 realizace',
+      countFew:  '{n} realizace',
+      countMany: '{n} realizací',
+      lightbox:  'Zvětšená fotografie',
+      close:     'Zavřít',
+      prev:      'Předchozí',
+      next:      'Další'
+    },
+    en: {
+      required:  'This field is required.',
+      consent:   'We cannot process your message without your consent.',
+      email:     'Enter an e-mail in the format name@domain.com',
+      phone:     'Enter a phone number including the country code, e.g. +420 123 456 789',
+      short:     'Please write at least a few words (min. 10 characters).',
+      checkForm: 'Please check the highlighted fields.',
+      sending:   'Sending your message…',
+      sendingBtn:'Sending…',
+      okQuiet:   'Thank you, your message has been sent.',
+      ok:        'Thank you! We have received your message and will get back to you within one working day.',
+      failed:    'The message could not be sent. Please try again, or give us a call.',
+      offline:   'The message could not be sent — please check your connection, or give us a call.',
+      testMode:  'Test mode: the form works, but the Web3Forms key is missing (see js/main.js). The data is printed in the browser console.',
+      subject:   'New enquiry from the MOstavTY website',
+      count1:    '1 project',
+      countFew:  '{n} projects',
+      countMany: '{n} projects',
+      lightbox:  'Enlarged photograph',
+      close:     'Close',
+      prev:      'Previous',
+      next:      'Next'
+    },
+    de: {
+      required:  'Dieses Feld ist erforderlich.',
+      consent:   'Ohne Ihre Einwilligung können wir die Nachricht nicht bearbeiten.',
+      email:     'Geben Sie eine E-Mail im Format name@domain.de ein',
+      phone:     'Geben Sie die Telefonnummer mit Vorwahl ein, z. B. +420 123 456 789',
+      short:     'Bitte schreiben Sie mindestens ein paar Worte (mind. 10 Zeichen).',
+      checkForm: 'Bitte prüfen Sie die markierten Felder.',
+      sending:   'Nachricht wird gesendet…',
+      sendingBtn:'Senden…',
+      okQuiet:   'Vielen Dank, Ihre Nachricht wurde gesendet.',
+      ok:        'Vielen Dank! Wir haben Ihre Nachricht erhalten und melden uns innerhalb eines Werktages.',
+      failed:    'Die Nachricht konnte nicht gesendet werden. Bitte versuchen Sie es erneut oder rufen Sie uns an.',
+      offline:   'Die Nachricht konnte nicht gesendet werden — bitte prüfen Sie Ihre Verbindung oder rufen Sie uns an.',
+      testMode:  'Testmodus: Das Formular funktioniert, aber der Web3Forms-Schlüssel fehlt (siehe js/main.js). Die Daten stehen in der Browser-Konsole.',
+      subject:   'Neue Anfrage über die Website MOstavTY',
+      count1:    '1 Projekt',
+      countFew:  '{n} Projekte',
+      countMany: '{n} Projekte',
+      lightbox:  'Vergrößertes Foto',
+      close:     'Schließen',
+      prev:      'Zurück',
+      next:      'Weiter'
+    }
+  };
+
+  var LANG = (document.documentElement.getAttribute('lang') || 'cs')
+             .slice(0, 2).toLowerCase();
+  var T = STRINGS[LANG] || STRINGS.cs;
+
   /* ======================================================================
      1) Mobilní navigace
      ====================================================================== */
@@ -206,8 +284,10 @@
         if (match) { shown++; }
       });
       if (counter) {
-        counter.textContent = shown === 1 ? '1 realizace' :
-          (shown >= 2 && shown <= 4) ? shown + ' realizace' : shown + ' realizací';
+        var tpl = shown === 1 ? T.count1
+                : (shown >= 2 && shown <= 4) ? T.countFew
+                : T.countMany;
+        counter.textContent = tpl.replace('{n}', shown);
       }
     }
 
@@ -237,11 +317,11 @@
     box.className = 'lightbox';
     box.setAttribute('role', 'dialog');
     box.setAttribute('aria-modal', 'true');
-    box.setAttribute('aria-label', 'Zvětšená fotografie');
+    box.setAttribute('aria-label', T.lightbox);
     box.innerHTML =
-      '<button class="lightbox__close" type="button" aria-label="Zavřít">&times;</button>' +
-      '<button class="lightbox__nav lightbox__nav--prev" type="button" aria-label="Předchozí">&#8249;</button>' +
-      '<button class="lightbox__nav lightbox__nav--next" type="button" aria-label="Další">&#8250;</button>' +
+      '<button class="lightbox__close" type="button" aria-label="' + T.close + '">&times;</button>' +
+      '<button class="lightbox__nav lightbox__nav--prev" type="button" aria-label="' + T.prev + '">&#8249;</button>' +
+      '<button class="lightbox__nav lightbox__nav--next" type="button" aria-label="' + T.next + '">&#8250;</button>' +
       '<figure class="lightbox__figure">' +
         '<div data-lb-media></div>' +
         '<figcaption class="lightbox__caption" data-lb-caption></figcaption>' +
@@ -344,26 +424,26 @@
 
       if (field.hasAttribute('required')) {
         if (field.type === 'checkbox' && !field.checked) {
-          msg = 'Bez souhlasu nemůžeme zprávu zpracovat.';
+          msg = T.consent;
         } else if (field.type !== 'checkbox' && !value) {
-          msg = 'Toto pole je povinné.';
+          msg = T.required;
         }
       }
 
       if (!msg && value && field.type === 'email') {
         if (!/^[^\s@]+@[^\s@]+\.[a-z]{2,}$/i.test(value)) {
-          msg = 'Zadejte e-mail ve formátu jmeno@domena.cz';
+          msg = T.email;
         }
       }
 
       if (!msg && value && field.type === 'tel') {
         // Povolíme mezery, +, závorky; vyžadujeme alespoň 9 číslic
         var digits = value.replace(/\D/g, '');
-        if (digits.length < 9) { msg = 'Zadejte telefon včetně předvolby, např. +420 123 456 789'; }
+        if (digits.length < 9) { msg = T.phone; }
       }
 
       if (!msg && field.name === 'message' && value && value.length < 10) {
-        msg = 'Napište prosím alespoň pár slov (min. 10 znaků).';
+        msg = T.short;
       }
 
       if (errorEl) { errorEl.textContent = msg; }
@@ -415,20 +495,20 @@
       // předstíráme úspěch, ať se nedozví, podle čeho jsme ho poznali.
       var hp = form.querySelector('.hp-input');
       if (hp && hp.value) {
-        setStatus('ok', 'Děkujeme, zpráva byla odeslána.');
+        setStatus('ok', T.okQuiet);
         form.reset();
         return;
       }
 
       if (!validateAll()) {
-        setStatus('error', 'Zkontrolujte prosím zvýrazněná pole.');
+        setStatus('error', T.checkForm);
         return;
       }
 
       var data = new FormData(form);
 
       // Doplníme kontext, aby byl e-mail čitelný
-      data.append('subject', 'Nová poptávka z webu MOstavTY');
+      data.append('subject', T.subject);
       data.append('from_name', 'Web MOstavTY');
 
       // Testovací režim, dokud není vložený klíč
@@ -437,7 +517,7 @@
         data.forEach(function (v, k) { preview[k] = v; });
         console.warn('[MOstavTY] Web3Forms klíč není nastavený — formulář běží v testovacím režimu.');
         console.table(preview);
-        setStatus('ok', 'Testovací režim: formulář je funkční, ale chybí Web3Forms klíč (viz js/main.js). Data jsou vypsaná v konzoli prohlížeče.');
+        setStatus('ok', T.testMode);
         return;
       }
 
@@ -446,9 +526,9 @@
       if (submit) {
         submit.setAttribute('aria-busy', 'true');
         submit.dataset.label = submit.textContent;
-        submit.textContent = 'Odesílám…';
+        submit.textContent = T.sendingBtn;
       }
-      setStatus('sending', 'Odesílám zprávu…');
+      setStatus('sending', T.sending);
 
       fetch('https://api.web3forms.com/submit', {
         method: 'POST',
@@ -457,17 +537,17 @@
         .then(function (res) { return res.json(); })
         .then(function (json) {
           if (json.success) {
-            setStatus('ok', 'Děkujeme! Zprávu jsme dostali a ozveme se do jednoho pracovního dne.');
+            setStatus('ok', T.ok);
             form.reset();
             Array.prototype.forEach.call(form.querySelectorAll('[aria-invalid]'), function (f) {
               f.setAttribute('aria-invalid', 'false');
             });
           } else {
-            setStatus('error', 'Zprávu se nepodařilo odeslat. Zkuste to prosím znovu, nebo nám zavolejte.');
+            setStatus('error', T.failed);
           }
         })
         .catch(function () {
-          setStatus('error', 'Zprávu se nepodařilo odeslat — zkontrolujte připojení, nebo nám prosím zavolejte.');
+          setStatus('error', T.offline);
         })
         .then(function () {
           if (submit) {

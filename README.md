@@ -139,6 +139,25 @@ Momentálně je favicon vložená přímo v kódu jako malé SVG (oranžový
 čtvereček s „M"). Vlastní si můžete vygenerovat na
 <https://realfavicongenerator.net> a nahradit řádek `<link rel="icon" ...>`.
 
+## Interní stránka s inzeráty
+
+Soubor [inzeraty-interni.html](inzeraty-interni.html) obsahuje pět hotových
+inzerátů (Facebook + Bazoš) včetně fotek ve správných rozměrech. Otevřete ho
+přímým zadáním adresy:
+
+```
+https://www.mostavty.cz/inzeraty-interni.html
+```
+
+Stránka **není nikde prolinkovaná**, není v `sitemap.xml`, má v hlavičce
+`noindex` a je zakázaná v `robots.txt`.
+
+Jde ale o zastření, ne o zabezpečení — **kdo adresu zná, otevře si ji.**
+Adresa je navíc uvedená v `robots.txt`, který je veřejně čitelný. Pokud by
+stránka měla být opravdu chráněná, je potřeba heslo na úrovni hostingu
+(basic auth / `.htaccess`), nebo ji na web vůbec nenahrávat a otevírat si ji
+jen lokálně v počítači.
+
 ## Nasazení
 
 Web je statický, takže funguje na jakémkoli hostingu. Nejjednodušší varianty:
@@ -162,6 +181,50 @@ Po nasazení ještě:
    víc poptávek než samotný web,
 4. otestujte formulář tím, že si pošlete zkušební zprávu.
 
+## Jazykové mutace
+
+Web je ve třech jazycích:
+
+| Jazyk | Adresa | Složka |
+|---|---|---|
+| Čeština (výchozí) | `/` | kořen projektu |
+| Angličtina | `/en/` | [en/](en/) |
+| Němčina | `/de/` | [de/](de/) |
+
+Přepínač **CZ / EN / DE** je v hlavičce každé stránky. Aktivní jazyk je
+zvýrazněný oranžově.
+
+### Jak je to poskládané
+
+- **URL jsou přeložené** — `/sluzby.html`, `/en/services.html`,
+  `/de/leistungen.html`. Je to lepší pro SEO než `?lang=en`.
+- **Jeden CSS a jeden JS** pro všechny jazyky. Hlášky formuláře se
+  přepínají podle `<html lang="…">` — slovník je na začátku
+  [js/main.js](js/main.js) v proměnné `STRINGS`.
+- **`hreflang`** odkazy v hlavičce i v `sitemap.xml` říkají Googlu, že jde
+  o tutéž stránku v jiném jazyce.
+- **Obrázky jsou společné** — složka `img/` se nekopíruje, mutace na ni
+  odkazují přes `../img/`.
+
+### Když budete něco měnit
+
+Úprava textu na jedné jazykové verzi **se nepromítne do ostatních** — je to
+statický web, každý soubor je samostatný. Při změně ceny, telefonu nebo
+údaje o firmě je potřeba projít všechny tři verze.
+
+Nejrychleji to zkontrolujete takto:
+
+```bash
+grep -rn "12 000 Kč\|12,000 CZK\|12 000 CZK" --include="*.html" .
+```
+
+### Ceny v cizojazyčných verzích
+
+U cen je kromě korun uvedený orientační přepočet na eura
+(např. „from 12,000 CZK/m² (approx. 480 EUR)"). **Kurz se mění**, takže to
+časem přestane sedět — buď přepočet občas aktualizujte, nebo ho vymažte
+a nechte jen koruny.
+
 ## Struktura projektu
 
 ```
@@ -172,9 +235,18 @@ mostavty/
 ├── o-nas.html                      o firmě, tým, doklady
 ├── kontakt.html                    kontakty + poptávkový formulář
 ├── ochrana-osobnich-udaju.html     GDPR (šablona)
+├── inzeraty-interni.html           INTERNÍ — podklady pro inzerci
 ├── 404.html                        chybová stránka
 ├── robots.txt
 ├── sitemap.xml
+├── en/                             anglická mutace
+│   ├── index.html                  · services.html, projects.html,
+│   ├── about.html                  ·   contact.html, privacy.html, 404.html
+│   └── services/                   · 5 podstránek služeb
+├── de/                             německá mutace
+│   ├── index.html                  · leistungen.html, referenzen.html,
+│   ├── ueber-uns.html              ·   kontakt.html, datenschutz.html, 404.html
+│   └── leistungen/                 · 5 podstránek služeb
 ├── css/
 │   └── style.css                   veškerý styl, barvy v :root na začátku
 ├── js/

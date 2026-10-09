@@ -1,0 +1,1082 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Inzeráty k použití — interní | MOstavTY</title>
+
+<!-- Stránka nemá být ve vyhledávačích ani v náhledech sdílení -->
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+<meta name="googlebot" content="noindex, nofollow">
+<meta name="referrer" content="no-referrer">
+
+<meta name="theme-color" content="#1c1f24">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='5' fill='%231c1f24'/%3E%3Cpath d='M7 23V9l5 7 5-7v14' stroke='%23f07d1a' stroke-width='2.6' fill='none' stroke-linejoin='round'/%3E%3Cpath d='M21 23V9h4' stroke='%23fff' stroke-width='2.6' fill='none'/%3E%3C/svg%3E">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+
+<style>
+  /* ---- Styly jen pro tuhle interní stránku ---- */
+  .admin-bar {
+    background: #2b2f36;
+    border-bottom: 2px solid var(--c-accent);
+    color: var(--c-text-invert);
+    padding: 14px 0;
+    font-size: .95rem;
+  }
+  .admin-bar strong { color: var(--c-accent); }
+
+  .warn {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    padding: 18px 20px;
+    margin-bottom: 36px;
+    background: var(--c-accent-soft);
+    border-left: 3px solid var(--c-accent);
+    border-radius: var(--radius);
+    font-size: .96rem;
+  }
+  .warn svg { flex: 0 0 auto; color: var(--c-accent-dark); margin-top: 2px; }
+
+  /* Navigace mezi inzeráty */
+  .jump { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 40px; }
+  .jump a {
+    padding: .45em 1em;
+    background: #fff;
+    border: 1px solid var(--c-border);
+    border-radius: 100px;
+    font-family: var(--font-head);
+    font-size: .95rem;
+    font-weight: 600;
+    letter-spacing: .03em;
+    text-transform: uppercase;
+    color: var(--c-text-soft);
+    text-decoration: none;
+  }
+  .jump a:hover { border-color: var(--c-accent); color: var(--c-text); text-decoration: none; }
+
+  /* Jeden inzerát */
+  .ad {
+    margin-bottom: 56px;
+    padding-bottom: 56px;
+    border-bottom: 1px solid var(--c-border);
+  }
+  .ad:last-child { border-bottom: 0; }
+
+  .ad__head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 12px;
+    margin-bottom: 8px;
+  }
+  .ad__num {
+    display: grid;
+    place-items: center;
+    width: 34px; height: 34px;
+    background: var(--c-accent);
+    border-radius: 50%;
+    font-family: var(--font-head);
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #fff;
+  }
+  .ad__head h2 { margin: 0; font-size: clamp(1.4rem, 2.6vw, 1.9rem); }
+
+  .ad__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 26px;
+    margin-top: 26px;
+  }
+  @media (max-width: 880px) { .ad__grid { grid-template-columns: 1fr; } }
+
+  /* Blok jedné varianty (FB / Bazoš) */
+  .variant {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--c-border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    background: #fff;
+  }
+  .variant__head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--c-border);
+  }
+  .variant__name {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-head);
+    font-size: 1.02rem;
+    font-weight: 700;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+  }
+  .variant__name .dot { width: 10px; height: 10px; border-radius: 50%; }
+  .dot--fb { background: #1877f2; }
+  .dot--bazos { background: #c8102e; }
+
+  /* Tělo roste, aby oba sloupce (FB i Bazoš) končily ve stejné výšce */
+  .variant__body { padding: 16px; display: flex; flex-direction: column; flex: 1; }
+  .variant__body > .tip { margin-top: auto; }
+
+  /* Pole s textem k rozkopírování */
+  .field-block { margin-bottom: 14px; }
+  .field-block:last-child { margin-bottom: 0; }
+  .field-block__label {
+    display: block;
+    margin-bottom: 5px;
+    font-size: .8rem;
+    font-weight: 700;
+    letter-spacing: .09em;
+    text-transform: uppercase;
+    color: var(--c-text-soft);
+  }
+  .copybox {
+    position: relative;
+    background: var(--c-bg-alt);
+    border: 1px solid var(--c-border);
+    border-radius: var(--radius);
+  }
+  .copybox pre {
+    margin: 0;
+    padding: 14px 16px;
+    max-height: 420px;
+    overflow: auto;
+    font-family: var(--font-sans);
+    font-size: .95rem;
+    line-height: 1.6;
+    white-space: pre-wrap;
+    word-break: break-word;
+    color: var(--c-text);
+  }
+  .copybox--one pre { white-space: pre-wrap; }
+
+  .copy-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 8px;
+    padding: .5em 1em;
+    background: var(--c-accent);
+    border: 0;
+    border-radius: var(--radius);
+    font-family: var(--font-head);
+    font-size: .92rem;
+    font-weight: 600;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+    color: #fff;
+    cursor: pointer;
+    transition: background .18s var(--ease);
+  }
+  .copy-btn:hover { background: var(--c-accent-dark); }
+  .copy-btn.is-done { background: var(--c-success); }
+
+  /* Fotka inzerátu */
+  .ad__photo { border: 1px solid var(--c-border); border-radius: var(--radius-lg); overflow: hidden; }
+  .ad__photo img { width: 100%; display: block; }
+  .ad__photo figcaption {
+    padding: 10px 14px;
+    background: var(--c-bg-alt);
+    border-top: 1px solid var(--c-border);
+    font-size: .88rem;
+    color: var(--c-text-soft);
+  }
+  .ad__photos { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 26px; }
+  @media (max-width: 880px) { .ad__photos { grid-template-columns: 1fr; } }
+
+  .meta-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 18px;
+    margin-top: 10px;
+    font-size: .9rem;
+    color: var(--c-text-soft);
+  }
+  .meta-row b { color: var(--c-text); font-weight: 600; }
+
+  .tip {
+    margin-top: 10px;
+    padding: 10px 14px;
+    background: #f0f6ff;
+    border-left: 3px solid #1877f2;
+    border-radius: var(--radius);
+    font-size: .9rem;
+    color: #30455e;
+  }
+  .tip--bazos { background: #fdf0f2; border-left-color: #c8102e; color: #5e3038; }
+
+  @media print {
+    .admin-bar, .jump, .copy-btn { display: none !important; }
+    .ad { page-break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ======================= INTERNÍ LIŠTA ======================= -->
+<div class="admin-bar">
+  <div class="wrap">
+    <strong>INTERNÍ STRÁNKA</strong> — není v menu ani v mapě webu, vyhledávače ji
+    mají zakázanou. Neposílejte ji zákazníkům.
+  </div>
+</div>
+
+<main id="main">
+  <section class="section section--tight">
+    <div class="wrap">
+
+      <p class="eyebrow">Podklady pro inzerci</p>
+      <h1 style="margin-bottom:.3em">Inzeráty k použití</h1>
+      <p class="lead">
+        Pět hotových inzerátů ve dvou verzích — pro Facebook a pro Bazoš.
+        Text zkopírujete tlačítkem, fotku stáhnete pravým tlačítkem myši.
+      </p>
+
+      <div class="warn" style="margin-top:32px">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <path d="M12 9v4M12 17h.01"/><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"/>
+        </svg>
+        <div>
+          <strong>Než odešlete první inzerát, projděte tohle:</strong>
+          <ul style="margin:.5em 0 0;padding-left:1.2em">
+            <li>Doplňte <strong>telefon a e-mail</strong> — v textech je zatím
+              zástupné číslo <code>+420 123 456 789</code>.</li>
+            <li>Zkontrolujte <strong>ceny</strong> — jsou orientační a musí
+              odpovídat tomu, za co opravdu pracujete.</li>
+            <li>Ověřte <strong>termíny a kapacitu</strong> („volné termíny od…“).</li>
+            <li>Fotky jsou <strong>ilustrační</strong>. Jakmile budete mít vlastní
+              realizace, vyměňte je — u inzerátů to dělá největší rozdíl.</li>
+          </ul>
+        </div>
+      </div>
+
+      <nav class="jump" aria-label="Přejít na inzerát">
+        <a href="#i1">1 · Rekonstrukce bytu</a>
+        <a href="#i2">2 · Koupelny</a>
+        <a href="#i3">3 · Štuky a omítky</a>
+        <a href="#i4">4 · Podlahy</a>
+        <a href="#i5">5 · Dílčí práce</a>
+      </nav>
+
+      <!-- ============================================================
+           INZERÁT 1 — REKONSTRUKCE BYTU
+           ============================================================ -->
+      <article class="ad" id="i1">
+        <div class="ad__head">
+          <span class="ad__num">1</span>
+          <h2>Kompletní rekonstrukce bytu</h2>
+        </div>
+        <p style="color:var(--c-text-soft);margin:0">
+          Hlavní služba, nejvyšší hodnota zakázky. Cílí na majitele starších
+          bytů, kteří řeší celou rekonstrukci najednou.
+        </p>
+
+        <div class="ad__grid">
+
+          <!-- Facebook -->
+          <div class="variant">
+            <div class="variant__head">
+              <span class="variant__name"><span class="dot dot--fb"></span> Facebook</span>
+              <span style="font-size:.85rem;color:var(--c-text-soft)">příspěvek na profil / do skupin</span>
+            </div>
+            <div class="variant__body">
+              <div class="field-block">
+                <span class="field-block__label">Text příspěvku</span>
+                <div class="copybox">
+<pre data-copy>🔨 REKONSTRUKCE BYTU NA KLÍČ — Vysočina a Praha
+
+Předáte nám klíče a vrátíme vám hotový byt. Nemusíte shánět zvlášť zedníka, elektrikáře, instalatéra a podlaháře — máme je všechny v týmu.
+
+Co je v ceně:
+✅ Bourací práce včetně odvozu suti
+✅ Nové rozvody vody, odpadů a elektřiny
+✅ Koupelna a WC na míru
+✅ Podlahy, štuky, malování
+✅ Interiérové dveře a zárubně
+✅ Úklid a předávací protokol
+
+💰 Od 12 000 Kč/m² podle stavu bytu a materiálů
+📅 Obvykle 6–10 týdnů
+📋 Pevná cena ve smlouvě — žádné účty navíc na konci
+🛡️ Záruka 60 měsíců na provedenou práci
+
+Prohlídka a položkový rozpočet jsou ZDARMA a nezávazné. Do 48 hodin po prohlídce víte přesnou cenu.
+
+Působíme na Vysočině (Jihlava, Třebíč, Havlíčkův Brod, Žďár n. S., Pelhřimov) a v Praze.
+
+📞 +420 123 456 789
+✉️ info@mostavty.cz
+🌐 www.mostavty.cz
+
+#rekonstrukce #rekonstrukcebytu #Vysocina #Jihlava #Praha #stavebnifirma #bydleni</pre>
+                </div>
+                <button class="copy-btn" type="button">Zkopírovat text</button>
+              </div>
+              <div class="tip">
+                <strong>Kam s tím:</strong> na firemní profil a do skupin typu
+                „Bazar Jihlava“, „Jihlava a okolí“, „Rekonstrukce a bydlení“.
+                Do skupin vkládejte max. 1× týdně, jinak vás vyhodí.
+              </div>
+            </div>
+          </div>
+
+          <!-- Bazoš -->
+          <div class="variant">
+            <div class="variant__head">
+              <span class="variant__name"><span class="dot dot--bazos"></span> Bazoš</span>
+              <span style="font-size:.85rem;color:var(--c-text-soft)">sekce Služby → Stavebnictví</span>
+            </div>
+            <div class="variant__body">
+              <div class="field-block">
+                <span class="field-block__label">Nadpis inzerátu</span>
+                <div class="copybox copybox--one">
+<pre data-copy>Kompletní rekonstrukce bytů na klíč — Vysočina, Praha</pre>
+                </div>
+                <button class="copy-btn" type="button">Zkopírovat nadpis</button>
+              </div>
+
+              <div class="field-block">
+                <span class="field-block__label">Text inzerátu</span>
+                <div class="copybox">
+<pre data-copy>Provádíme kompletní rekonstrukce bytů na klíč. Jedna firma zajistí celou zakázku — nemusíte koordinovat několik řemeslníků.
+
+CO DĚLÁME:
+- bourací práce a odvoz suti
+- nové rozvody vody, odpadů a elektřiny včetně rozvaděče
+- revizní zpráva na elektroinstalaci
+- koupelny a WC (zděné i sádrokartonové)
+- sádrokartonové příčky a podhledy
+- štuky, vyrovnání stěn, malování
+- podlahy (vinyl, laminát, dřevo, dlažba)
+- montáž dveří a obložkových zárubní
+- průběžný i finální úklid
+
+CENA:
+Od 12 000 Kč/m² podle stavu bytu a zvolených materiálů. Přesnou cenu řekneme po prohlídce — rozpočet je položkový, vidíte zvlášť materiál a práci.
+
+TERMÍN:
+Kompletní rekonstrukce bytu obvykle 6-10 týdnů.
+
+PROČ MY:
+- pevná cena ve smlouvě, vícepráce jen s vaším písemným souhlasem
+- harmonogram prací předem, průběh posíláme fotkami
+- jeden stavbyvedoucí jako váš kontakt po celou dobu
+- záruka 60 měsíců na práci
+- pojištění odpovědnosti
+
+Prohlídka a rozpočet ZDARMA a nezávazně.
+
+Působíme na Vysočině (Jihlava, Třebíč, Havlíčkův Brod, Žďár nad Sázavou, Pelhřimov, Velké Meziříčí, Humpolec, Telč) a v Praze.
+
+Volejte: +420 123 456 789 (Po-Pá 7:00-17:00)
+E-mail: info@mostavty.cz</pre>
+                </div>
+                <button class="copy-btn" type="button">Zkopírovat text</button>
+              </div>
+
+              <div class="meta-row">
+                <span><b>Kategorie:</b> Služby → Stavebnictví</span>
+                <span><b>Cena:</b> Dohodou</span>
+                <span><b>Lokalita:</b> Jihlava</span>
+              </div>
+              <div class="tip tip--bazos">
+                <strong>Pozor:</strong> Bazoš maže inzeráty s odkazem na web
+                v textu. Web uveďte až v odpovědi na dotaz, nebo vůbec.
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="ad__photos">
+          <figure class="ad__photo" style="margin:0">
+            <img src="img/inzeraty/rekonstrukce-bytu-fb.jpg"
+                 alt="Obývací pokoj s kuchyní po kompletní rekonstrukci"
+                 width="1200" height="630" loading="lazy">
+            <figcaption>Facebook — 1200 × 630 px</figcaption>
+          </figure>
+          <figure class="ad__photo" style="margin:0">
+            <img src="img/inzeraty/rekonstrukce-bytu-bazos.jpg"
+                 alt="Obývací pokoj s kuchyní po kompletní rekonstrukci"
+                 width="1000" height="750" loading="lazy">
+            <figcaption>Bazoš — 1000 × 750 px</figcaption>
+          </figure>
+        </div>
+      </article>
+
+      <!-- ============================================================
+           INZERÁT 2 — KOUPELNY
+           ============================================================ -->
+      <article class="ad" id="i2">
+        <div class="ad__head">
+          <span class="ad__num">2</span>
+          <h2>Koupelny a bytová jádra</h2>
+        </div>
+        <p style="color:var(--c-text-soft);margin:0">
+          Nejčastější dílčí zakázka. Jasně ohraničená, lidé po ní aktivně
+          hledají a rozhodují se rychleji než u celé rekonstrukce.
+        </p>
+
+        <div class="ad__grid">
+
+          <div class="variant">
+            <div class="variant__head">
+              <span class="variant__name"><span class="dot dot--fb"></span> Facebook</span>
+              <span style="font-size:.85rem;color:var(--c-text-soft)">příspěvek na profil / do skupin</span>
+            </div>
+            <div class="variant__body">
+              <div class="field-block">
+                <span class="field-block__label">Text příspěvku</span>
+                <div class="copybox">
+<pre data-copy>🚿 NOVÁ KOUPELNA ZA 3 TÝDNY
+
+Máte v bytě ještě umakartové jádro? Zbouráme ho a postavíme místo něj pořádnou koupelnu — se vším, co k tomu patří.
+
+Co uděláme:
+✅ Demolice jádra a odvoz suti
+✅ Nové rozvody vody a odpadů
+✅ Elektroinstalace včetně pospojování
+✅ Hydroizolace (tohle je to, na čem se šetřit nevyplatí)
+✅ Obklady, dlažba, spárování
+✅ Montáž sanity, baterií, sprchového koutu
+✅ Úklid po sobě
+
+⏱️ Hotovo obvykle za 14–21 dní
+💰 Od 95 000 Kč podle velikosti a vybavení
+🛡️ Záruka 60 měsíců
+
+Dopředu si řekneme, jak dlouho budete bez vody a jestli vám zůstane funkční WC — žádné překvapení v průběhu.
+
+Prohlídka a rozpočet ZDARMA.
+
+Vysočina (Jihlava, Třebíč, Havlíčkův Brod, Žďár n. S.) a Praha.
+
+📞 +420 123 456 789
+✉️ info@mostavty.cz
+
+#koupelna #rekonstrukcekoupelny #bytovejadro #Jihlava #Vysocina #Praha</pre>
+                </div>
+                <button class="copy-btn" type="button">Zkopírovat text</button>
+              </div>
+              <div class="tip">
+                <strong>Tip:</strong> tenhle inzerát funguje nejlíp s fotkou
+                „před a po“. Jakmile budete mít vlastní, nahrajte obě vedle sebe.
+              </div>
+            </div>
+          </div>
+
+          <div class="variant">
+            <div class="variant__head">
+              <span class="variant__name"><span class="dot dot--bazos"></span> Bazoš</span>
+              <span style="font-size:.85rem;color:var(--c-text-soft)">sekce Služby → Stavebnictví</span>
+            </div>
+            <div class="variant__body">
+              <div class="field-block">
+                <span class="field-block__label">Nadpis inzerátu</span>
+                <div class="copybox copybox--one">
+<pre data-copy>Rekonstrukce koupelny a bytového jádra — hotovo za 3 týdny</pre>
+                </div>
+                <button class="copy-btn" type="button">Zkopírovat nadpis</button>
+              </div>
+
+              <div class="field-block">
+                <span class="field-block__label">Text inzerátu</span>
+                <div class="copybox">
+<pre data-copy>Rekonstruujeme koupelny a bourame umakartová bytová jádra. Kompletní dodávka od demolice po montáž sanity.
+
+POSTUP:
+1. Demolice jádra nebo původní koupelny, odvoz suti
+2. Nové rozvody vody a odpadů
+3. Elektroinstalace včetně pospojování a revize
+4. Hydroizolační stěrka a izolační pásy
+5. Obklady a dlažba, spárování, silikony
+6. Montáž sanity, baterií, sprchového koutu nebo vany
+7. Úklid
+
+TERMÍN: obvykle 14-21 dní od začátku prací.
+
+CENA: od 95 000 Kč podle velikosti koupelny a zvoleného vybavení. Přesný rozpočet po prohlídce, zdarma a nezávazně.
+
+Dopředu vám řekneme, jak dlouho bude odstávka vody a zda zůstane funkční WC.
+
+Záruka 60 měsíců na provedenou práci. Pojištění odpovědnosti. Smlouva o dílo s pevnou cenou.
+
+Pracujeme na Vysočině (Jihlava, Třebíč, Havlíčkův Brod, Žďár nad Sázavou, Pelhřimov) a v Praze.
+
+Telefon: +420 123 456 789 (Po-Pá 7:00-17:00)
+E-mail: info@mostavty.cz</pre>
+                </div>
+                <button class="copy-btn" type="button">Zkopírovat text</button>
+              </div>
+
+              <div class="meta-row">
+                <span><b>Kategorie:</b> Služby → Stavebnictví</span>
+                <span><b>Cena:</b> 95 000 Kč</span>
+                <span><b>Lokalita:</b> Jihlava</span>
+              </div>
+              <div class="tip tip--bazos">
+                <strong>Tip:</strong> konkrétní cena v poli „Cena“ přináší
+                víc reakcí než „Dohodou“ — lidé podle ní filtrují.
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="ad__photos">
+          <figure class="ad__photo" style="margin:0">
+            <img src="img/inzeraty/koupelna-fb.jpg"
+                 alt="Světlá koupelna s volně stojící vanou"
+                 width="1200" height="630" loading="lazy">
+            <figcaption>Facebook — 1200 × 630 px</figcaption>
+          </figure>
+          <figure class="ad__photo" style="margin:0">
+            <img src="img/inzeraty/koupelna-bazos.jpg"
+                 alt="Světlá koupelna s volně stojící vanou"
+                 width="1000" height="750" loading="lazy">
+            <figcaption>Bazoš — 1000 × 750 px</figcaption>
+          </figure>
+        </div>
+      </article>
+
+      <!-- ============================================================
+           INZERÁT 3 — ŠTUKY A OMÍTKY
+           ============================================================ -->
+      <article class="ad" id="i3">
+        <div class="ad__head">
+          <span class="ad__num">3</span>
+          <h2>Štuky, omítky a natahování zdí</h2>
+        </div>
+        <p style="color:var(--c-text-soft);margin:0">
+          Levnější vstupní služba. Dobrá na získání prvního kontaktu —
+          spokojený zákazník se pak vrátí s větší zakázkou.
+        </p>
+
+        <div class="ad__grid">
+
+          <div class="variant">
+            <div class="variant__head">
+              <span class="variant__name"><span class="dot dot--fb"></span> Facebook</span>
+              <span style="font-size:.85rem;color:var(--c-text-soft)">příspěvek na profil / do skupin</span>
+            </div>
+            <div class="variant__body">
+              <div class="field-block">
+                <span class="field-block__label">Text příspěvku</span>
+                <div class="copybox">
+<pre data-copy>🧱 ROVNÉ STĚNY BEZ VLN A PŘECHODŮ
+
+Štukujeme, natahujeme a vyrovnáváme zdi. Výsledek je stěna, na kterou se dá rovnou malovat — bez dodělávání.
+
+Děláme:
+✅ Štukování stěn a stropů
+✅ Natahování a vyrovnávání nerovných zdí
+✅ Vápenocementové a sanační omítky
+✅ Stěrky pod malbu i pod tapetu
+✅ Lepení perlinky na praskliny
+✅ Rohové a okenní lišty
+✅ Zapravení po bourání a drážkách
+
+💰 Od 280 Kč/m² podle stavu podkladu
+⏱️ Místnost obvykle za 2–4 dny
+
+Na čem nešetříme: podklad vždy očistíme a napenetrujeme a necháme vyschnout. Štuk nahozený na prach se za půl roku odlupuje — tudy cesta nevede.
+
+Rovinnost měříme latí, ne od oka.
+
+Bereme i jednu jedinou stěnu. Zakrýváme nábytek, po sobě uklízíme.
+
+📞 +420 123 456 789
+✉️ info@mostavty.cz
+
+#stuky #omitky #malirskeprace #Jihlava #Vysocina #rekonstrukce</pre>
+                </div>
+                <button class="copy-btn" type="button">Zkopírovat text</button>
+              </div>
+              <div class="tip">
+                <strong>Tip:</strong> doplňte vlastní detail rovné stěny
+                v bočním světle — řemeslníci i zákazníci to poznají.
+              </div>
+            </div>
+          </div>
+
+          <div class="variant">
+            <div class="variant__head">
+              <span class="variant__name"><span class="dot dot--bazos"></span> Bazoš</span>
+              <span style="font-size:.85rem;color:var(--c-text-soft)">sekce Služby → Stavebnictví</span>
+            </div>
+            <div class="variant__body">
+              <div class="field-block">
+                <span class="field-block__label">Nadpis inzerátu</span>
+                <div class="copybox copybox--one">
+<pre data-copy>Štuky, omítky, natahování zdí — Jihlava a okolí</pre>
+                </div>
+                <button class="copy-btn" type="button">Zkopírovat nadpis</button>
+              </div>
+
+              <div class="field-block">
+                <span class="field-block__label">Text inzerátu</span>
+                <div class="copybox">
+<pre data-copy>Provádíme štukování, natahování a vyrovnávání zdí. Výsledkem je rovná stěna připravená k malování.
+
+NABÍZÍME:
+- štukování stěn a stropů (jemný štuk pod malbu)
+- natahování zdí a vyrovnání nerovností
+- vápenocementové jádrové omítky
+- sanační omítky na vlhké zdivo
+- vápenné omítky do starších domů
+- celoplošné stěrky pod malbu nebo tapetu
+- lepení perlinky na praskliny a přechody materiálů
+- rohové a okenní lišty
+- zapravení drážek a prostupů po bourání
+
+POSTUP:
+Zakryjeme podlahy a nábytek, očistíme podklad, napenetrujeme a necháme vyschnout. Teprve pak štukujeme. Po vyschnutí přebrousíme a zkontrolujeme latí a bočním světlem.
+
+CENA: od 280 Kč/m² podle stavu podkladu. U silně nerovných stěn je potřeba vyrovnávací vrstva navíc — vždy řekneme dopředu.
+
+TERMÍN: jedna místnost obvykle 2-4 dny.
+
+VLHKÉ ZDIVO: pokud stěna u podlahy vlhne a omítka opadává, samotný štuk problém nevyřeší. Je potřeba nejdřív odříznout vzlínání a použít sanační omítku. Při prohlídce to poznáme a navrhneme řešení.
+
+Bereme i malé zakázky — klidně jednu stěnu.
+
+Jihlava, Třebíč, Havlíčkův Brod, Žďár nad Sázavou, Pelhřimov a okolí.
+
+Telefon: +420 123 456 789
+E-mail: info@mostavty.cz</pre>
+                </div>
+                <button class="copy-btn" type="button">Zkopírovat text</button>
+              </div>
+
+              <div class="meta-row">
+                <span><b>Kategorie:</b> Služby → Stavebnictví</span>
+                <span><b>Cena:</b> 280 Kč</span>
+                <span><b>Lokalita:</b> Jihlava</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="ad__photos">
+          <figure class="ad__photo" style="margin:0">
+            <img src="img/inzeraty/stuky-fb.jpg"
+                 alt="Chodba s hladkými vyštukovanými stěnami"
+                 width="1200" height="630" loading="lazy">
+            <figcaption>Facebook — 1200 × 630 px</figcaption>
+          </figure>
+          <figure class="ad__photo" style="margin:0">
+            <img src="img/inzeraty/stuky-bazos.jpg"
+                 alt="Chodba s hladkými vyštukovanými stěnami"
+                 width="1000" height="750" loading="lazy">
+            <figcaption>Bazoš — 1000 × 750 px</figcaption>
+          </figure>
+        </div>
+      </article>
+
+      <!-- ============================================================
+           INZERÁT 4 — PODLAHY
+           ============================================================ -->
+      <article class="ad" id="i4">
+        <div class="ad__head">
+          <span class="ad__num">4</span>
+          <h2>Pokládka podlah</h2>
+        </div>
+        <p style="color:var(--c-text-soft);margin:0">
+          Rychlá zakázka s jasným výsledkem. Lidé po ní hledají hlavně na jaře
+          a na podzim.
+        </p>
+
+        <div class="ad__grid">
+
+          <div class="variant">
+            <div class="variant__head">
+              <span class="variant__name"><span class="dot dot--fb"></span> Facebook</span>
+              <span style="font-size:.85rem;color:var(--c-text-soft)">příspěvek na profil / do skupin</span>
+            </div>
+            <div class="variant__body">
+              <div class="field-block">
+                <span class="field-block__label">Text příspěvku</span>
+                <div class="copybox">
+<pre data-copy>🪵 NOVÁ PODLAHA BEZ VRZÁNÍ A VLN
+
+Pokládáme vinyl, laminát, dřevěné podlahy i dlažbu. Ale začínáme vždycky u podkladu — na nerovné podlaze nevydrží ani ta nejdražší krytina.
+
+Co děláme:
+✅ Vinyl (lepený i click) — odolný vodě, i do kuchyně
+✅ Laminát — nejrychlejší a nejdostupnější
+✅ Dřevěné podlahy — třívrstvé i masivní
+✅ Dlažba včetně velkoformátu
+✅ Samonivelační stěrky
+✅ Soklové lišty a přechodové profily
+
+💰 Od 250 Kč/m² za pokládku
+⏱️ Místnost obvykle za 1–2 dny
+
+Co u nás dostanete navíc: podklad přeměříme — rovinnost latí a u betonu i zbytkovou vlhkost. Pokud je potřeba stěrka, řekneme to PŘEDEM i s cenou. Je to položka, kterou zákazníci v rozpočtech od jiných firem často nevidí a pak je nemile překvapí.
+
+Máte podlahové vytápění? Řekněte nám to — ne každá krytina a podložka se na něj hodí.
+
+📞 +420 123 456 789
+✉️ info@mostavty.cz
+
+#podlahy #vinyl #laminat #plovoucipodlaha #Jihlava #Vysocina</pre>
+                </div>
+                <button class="copy-btn" type="button">Zkopírovat text</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="variant">
+            <div class="variant__head">
+              <span class="variant__name"><span class="dot dot--bazos"></span> Bazoš</span>
+              <span style="font-size:.85rem;color:var(--c-text-soft)">sekce Služby → Stavebnictví</span>
+            </div>
+            <div class="variant__body">
+              <div class="field-block">
+                <span class="field-block__label">Nadpis inzerátu</span>
+                <div class="copybox copybox--one">
+<pre data-copy>Pokládka podlah — vinyl, laminát, dřevo, dlažba</pre>
+                </div>
+                <button class="copy-btn" type="button">Zkopírovat nadpis</button>
+              </div>
+
+              <div class="field-block">
+                <span class="field-block__label">Text inzerátu</span>
+                <div class="copybox">
+<pre data-copy>Pokládáme podlahové krytiny včetně přípravy podkladu.
+
+POKLÁDÁME:
+- vinylové podlahy (lepené i click)
+- laminátové plovoucí podlahy
+- dřevěné podlahy (třívrstvé i masivní)
+- dlažbu včetně velkoformátu
+- koberce v metráži i kobercové čtverce
+
+PŘÍPRAVA PODKLADU:
+- samonivelační stěrky
+- anhydritové a betonové potěry
+- penetrace
+
+POSTUP:
+1. Odstraníme starou krytinu a lišty
+2. Změříme rovinnost latí a u betonu i zbytkovou vlhkost
+3. Podle potřeby napenetrujeme a natáhneme stěrku
+4. Necháme vyschnout (u stěrky 1-3 dny podle vrstvy)
+5. Položíme podložku a krytinu s dilatačními spárami
+6. Namontujeme sokly a přechodové profily
+7. Uklidíme a odvezeme odpad
+
+CENA: od 250 Kč/m² za pokládku. Stěrka a příprava podkladu se počítají zvlášť — vždy řekneme předem, ať vás to na konci nepřekvapí.
+
+TERMÍN: jedna místnost obvykle 1-2 dny (bez čekání na vyschnutí stěrky).
+
+PODLAHOVÉ VYTÁPĚNÍ: pokud ho máte, řekněte nám to. Vybereme krytinu a podložku s vhodným tepelným odporem a dodržíme náběhový protokol vytápění.
+
+Jihlava, Třebíč, Havlíčkův Brod, Žďár nad Sázavou, Pelhřimov a okolí. Po dohodě i Praha.
+
+Telefon: +420 123 456 789
+E-mail: info@mostavty.cz</pre>
+                </div>
+                <button class="copy-btn" type="button">Zkopírovat text</button>
+              </div>
+
+              <div class="meta-row">
+                <span><b>Kategorie:</b> Služby → Stavebnictví</span>
+                <span><b>Cena:</b> 250 Kč</span>
+                <span><b>Lokalita:</b> Jihlava</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="ad__photos">
+          <figure class="ad__photo" style="margin:0">
+            <img src="img/inzeraty/podlahy-fb.jpg"
+                 alt="Kuchyně s novou dřevěnou podlahou"
+                 width="1200" height="630" loading="lazy">
+            <figcaption>Facebook — 1200 × 630 px</figcaption>
+          </figure>
+          <figure class="ad__photo" style="margin:0">
+            <img src="img/inzeraty/podlahy-bazos.jpg"
+                 alt="Kuchyně s novou dřevěnou podlahou"
+                 width="1000" height="750" loading="lazy">
+            <figcaption>Bazoš — 1000 × 750 px</figcaption>
+          </figure>
+        </div>
+      </article>
+
+      <!-- ============================================================
+           INZERÁT 5 — DÍLČÍ PRÁCE
+           ============================================================ -->
+      <article class="ad" id="i5">
+        <div class="ad__head">
+          <span class="ad__num">5</span>
+          <h2>Dílčí práce a volná kapacita</h2>
+        </div>
+        <p style="color:var(--c-text-soft);margin:0">
+          Univerzální inzerát na vyplnění mezer v harmonogramu. Hodí se,
+          když vám vypadne zakázka nebo máte volný týden.
+        </p>
+
+        <div class="ad__grid">
+
+          <div class="variant">
+            <div class="variant__head">
+              <span class="variant__name"><span class="dot dot--fb"></span> Facebook</span>
+              <span style="font-size:.85rem;color:var(--c-text-soft)">příspěvek na profil / do skupin</span>
+            </div>
+            <div class="variant__body">
+              <div class="field-block">
+                <span class="field-block__label">Text příspěvku</span>
+                <div class="copybox">
+<pre data-copy>🔧 MÁME VOLNOU KAPACITU — BEREME I MENŠÍ PRÁCE
+
+Nemusíte mít celou rekonstrukci. Přijedeme i na jednu místnost, jednu zeď nebo jednu podlahu.
+
+Co zvládneme:
+🔹 Štukování a natahování zdí
+🔹 Malování a tapetování
+🔹 Sádrokartonové příčky a podhledy
+🔹 Plovoucí a vinylové podlahy
+🔹 Dlažba a obklady
+🔹 Bourací práce a odvoz suti
+🔹 Zazdívání a vysekávání drážek
+🔹 Montáž zárubní a dveří
+🔹 Drobné vodoinstalace a elektro
+
+U menších prací vám cenu často řekneme hned na místě při prohlídce. U větších dostanete položkový rozpočet do dvou dnů.
+
+📅 Volné termíny od [DOPLŇTE MĚSÍC]
+📞 +420 123 456 789
+✉️ info@mostavty.cz
+
+Jihlava, Třebíč, Havlíčkův Brod, Žďár n. S., Pelhřimov a okolí.
+
+#řemeslníci #zednickeprace #sadrokarton #malovani #Jihlava #Vysocina #hodinovymanzel</pre>
+                </div>
+                <button class="copy-btn" type="button">Zkopírovat text</button>
+              </div>
+              <div class="tip">
+                <strong>Nezapomeňte:</strong> doplnit měsíc u volných termínů.
+                Inzerát se starým datem působí, že o práci nemáte zájem.
+              </div>
+            </div>
+          </div>
+
+          <div class="variant">
+            <div class="variant__head">
+              <span class="variant__name"><span class="dot dot--bazos"></span> Bazoš</span>
+              <span style="font-size:.85rem;color:var(--c-text-soft)">sekce Služby → Stavebnictví</span>
+            </div>
+            <div class="variant__body">
+              <div class="field-block">
+                <span class="field-block__label">Nadpis inzerátu</span>
+                <div class="copybox copybox--one">
+<pre data-copy>Zednické a dokončovací práce — bereme i malé zakázky</pre>
+                </div>
+                <button class="copy-btn" type="button">Zkopírovat nadpis</button>
+              </div>
+
+              <div class="field-block">
+                <span class="field-block__label">Text inzerátu</span>
+                <div class="copybox">
+<pre data-copy>Stavební firma s volnou kapacitou. Bereme i menší zakázky — jednu místnost, jednu stěnu, jednu podlahu.
+
+CO DĚLÁME:
+- štukování, natahování a vyrovnávání zdí
+- malování, tapetování, odstranění starých tapet
+- sádrokartonové příčky a podhledy
+- plovoucí, vinylové a dřevěné podlahy
+- dlažba a obklady
+- samonivelační stěrky
+- bourací práce a odvoz suti v kontejneru
+- zazdívání, vysekávání drážek pro rozvody
+- montáž zárubní a interiérových dveří
+- penetrace a stěrkování
+- drobné vodoinstalace a elektroinstalace
+
+JAK TO FUNGUJE:
+Zavoláte, popíšete co potřebujete. Přijedeme se podívat — prohlídka je zdarma a nezávazná. U menších prací řekneme cenu často hned na místě, u větších pošleme položkový rozpočet do dvou dnů.
+
+Pracujeme podle smlouvy o dílo i u malých zakázek. Vystavujeme řádné faktury. Máme pojištění odpovědnosti.
+
+Po sobě uklidíme a odvezeme odpad — to je součást ceny, ne příplatek.
+
+Volné termíny od [DOPLŇTE MĚSÍC].
+
+Jihlava, Třebíč, Havlíčkův Brod, Žďár nad Sázavou, Pelhřimov, Velké Meziříčí, Humpolec, Telč a okolí.
+
+Telefon: +420 123 456 789 (Po-Pá 7:00-17:00)
+E-mail: info@mostavty.cz</pre>
+                </div>
+                <button class="copy-btn" type="button">Zkopírovat text</button>
+              </div>
+
+              <div class="meta-row">
+                <span><b>Kategorie:</b> Služby → Stavebnictví</span>
+                <span><b>Cena:</b> Dohodou</span>
+                <span><b>Lokalita:</b> Jihlava</span>
+              </div>
+              <div class="tip tip--bazos">
+                <strong>Tip:</strong> tenhle inzerát obnovujte (topujte) vždy,
+                když vám vypadne zakázka. Na Bazoši se starší inzeráty propadají.
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="ad__photos">
+          <figure class="ad__photo" style="margin:0">
+            <img src="img/inzeraty/dilci-prace-fb.jpg"
+                 alt="Řemeslník v přilbě při práci na elektroinstalaci"
+                 width="1200" height="630" loading="lazy">
+            <figcaption>Facebook — 1200 × 630 px</figcaption>
+          </figure>
+          <figure class="ad__photo" style="margin:0">
+            <img src="img/inzeraty/dilci-prace-bazos.jpg"
+                 alt="Řemeslník v přilbě při práci na elektroinstalaci"
+                 width="1000" height="750" loading="lazy">
+            <figcaption>Bazoš — 1000 × 750 px</figcaption>
+          </figure>
+        </div>
+      </article>
+
+      <!-- ============================================================
+           PRAKTICKÉ POZNÁMKY
+           ============================================================ -->
+      <section style="margin-top:20px;padding:28px;background:var(--c-bg-alt);border-radius:var(--radius-lg)">
+        <h2 style="margin-top:0">Praktické poznámky k inzerci</h2>
+
+        <div class="grid grid--2" style="margin-top:24px">
+          <div>
+            <h3 style="display:flex;align-items:center;gap:8px">
+              <span class="dot dot--fb" style="width:12px;height:12px;border-radius:50%;display:inline-block"></span>
+              Facebook
+            </h3>
+            <ul class="checklist" style="font-size:.96rem">
+              <li>Do skupin vkládejte stejný inzerát <strong>max. 1× týdně</strong>,
+                jinak vás správci vyhodí.</li>
+              <li>Nejlepší čas na publikování je <strong>podvečer všedního dne</strong>
+                (18–21 h) nebo neděle dopoledne.</li>
+              <li>Na komentáře a zprávy odpovídejte <strong>do pár hodin</strong> —
+                Facebook upřednostňuje aktivní stránky.</li>
+              <li>Fotka „před a po“ má výrazně vyšší dosah než jedna hezká fotka.</li>
+              <li>Odkaz na web dávejte <strong>do prvního komentáře</strong>, ne do
+                příspěvku — Facebook příspěvky s odkazy zobrazuje méně.</li>
+            </ul>
+          </div>
+
+          <div>
+            <h3 style="display:flex;align-items:center;gap:8px">
+              <span class="dot dot--bazos" style="width:12px;height:12px;border-radius:50%;display:inline-block"></span>
+              Bazoš
+            </h3>
+            <ul class="checklist" style="font-size:.96rem">
+              <li>Inzerát vložte do <strong>Služby → Stavebnictví</strong>,
+                ne do bazaru.</li>
+              <li><strong>Neuvádějte odkaz na web</strong> přímo v textu — Bazoš
+                takové inzeráty maže.</li>
+              <li>Konkrétní cena v poli „Cena“ přináší víc reakcí než „Dohodou“,
+                protože podle ní lidé filtrují.</li>
+              <li>Inzeráty se propadají — <strong>obnovujte je</strong> každých
+                7–14 dní.</li>
+              <li>Můžete mít více inzerátů najednou, ale každý na jinou službu.
+                Pět stejných textů vám smažou.</li>
+            </ul>
+          </div>
+        </div>
+
+        <h3 style="margin-top:32px">Co s fotkami</h3>
+        <p style="margin-bottom:0">
+          Fotky na téhle stránce jsou ilustrační a jsou ve dvou formátech —
+          <strong>1200 × 630 px</strong> pro Facebook a <strong>1000 × 750 px</strong>
+          pro Bazoš. Stáhnete je pravým tlačítkem → „Uložit obrázek jako…“.
+          Soubory najdete taky ve složce <code>img/inzeraty/</code>.
+          Jakmile budete mít fotky vlastních realizací, vyměňte je — u inzerátů
+          na řemeslo je to to jediné, co zákazníka opravdu přesvědčí.
+        </p>
+      </section>
+
+    </div>
+  </section>
+</main>
+
+<script>
+/* Kopírování textu do schránky */
+(function () {
+  'use strict';
+
+  document.addEventListener('click', function (e) {
+    var btn = e.target.closest('.copy-btn');
+    if (!btn) { return; }
+
+    var box = btn.previousElementSibling;
+    var pre = box && box.querySelector('[data-copy]');
+    if (!pre) { return; }
+
+    var text = pre.textContent;
+    var label = btn.dataset.label || btn.textContent;
+    btn.dataset.label = label;
+
+    function done(ok) {
+      btn.textContent = ok ? '✓ Zkopírováno' : 'Označeno — stiskněte Ctrl+C';
+      btn.classList.toggle('is-done', ok);
+
+      // Když schránka selže (starší prohlížeč, chybějící oprávnění),
+      // text aspoň označíme, aby stačilo zmáčknout Ctrl+C.
+      if (!ok) {
+        try {
+          var sel = window.getSelection();
+          var range = document.createRange();
+          range.selectNodeContents(pre);
+          sel.removeAllRanges();
+          sel.addRange(range);
+        } catch (err) { /* nevadí, text jde označit myší */ }
+      }
+
+      setTimeout(function () {
+        btn.textContent = label;
+        btn.classList.remove('is-done');
+      }, 2600);
+    }
+
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(function () { done(true); },
+                                              function () { fallback(); });
+    } else {
+      fallback();
+    }
+
+    // Záloha pro starší prohlížeče a stránku otevřenou přes file://
+    function fallback() {
+      var ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.position = 'fixed';
+      ta.style.left = '-9999px';
+      document.body.appendChild(ta);
+      ta.select();
+      var ok = false;
+      try { ok = document.execCommand('copy'); } catch (err) { ok = false; }
+      document.body.removeChild(ta);
+      done(ok);
+    }
+  });
+})();
+</script>
+</body>
+</html>
