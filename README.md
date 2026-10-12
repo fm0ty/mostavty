@@ -141,12 +141,14 @@ Momentálně je favicon vložená přímo v kódu jako malé SVG (oranžový
 
 ## Interní stránka s inzeráty
 
-Soubor [inzeraty-interni.html](inzeraty-interni.html) obsahuje pět hotových
-inzerátů (Facebook + Bazoš) včetně fotek ve správných rozměrech. Otevřete ho
+Soubor [inzeraty.html](inzeraty.html) obsahuje šest hotových
+inzerátů (Facebook + Bazoš) včetně fotek ve správných rozměrech.
+Šestý je v angličtině — montáž nábytku, štukování, podlahy a menší
+práce v domě či bytě. Otevřete ho
 přímým zadáním adresy:
 
 ```
-https://www.mostavty.cz/inzeraty-interni.html
+https://www.mostavty.cz/inzeraty.html
 ```
 
 Stránka **není nikde prolinkovaná**, není v `sitemap.xml`, má v hlavičce
@@ -235,7 +237,7 @@ mostavty/
 ├── o-nas.html                      o firmě, tým, doklady
 ├── kontakt.html                    kontakty + poptávkový formulář
 ├── ochrana-osobnich-udaju.html     GDPR (šablona)
-├── inzeraty-interni.html           INTERNÍ — podklady pro inzerci
+├── inzeraty.html                  INTERNÍ — podklady pro inzerci
 ├── 404.html                        chybová stránka
 ├── robots.txt
 ├── sitemap.xml

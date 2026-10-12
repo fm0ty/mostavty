@@ -9,6 +9,6 @@ Allow: /
 # stránku neindexovali. Kdo adresu zná, otevře si ji. Stránka má navíc
 # v hlavičce noindex. Pokud by měla být opravdu chráněná, je potřeba
 # heslo na úrovni hostingu (.htaccess / basic auth).
-Disallow: /inzeraty-interni.html
+Disallow: /inzeraty.html
 
 Sitemap: https://www.mostavty.cz/sitemap.xml
