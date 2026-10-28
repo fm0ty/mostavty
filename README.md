@@ -92,6 +92,7 @@ Kam je nahrát:
 | `img/` | hero fotka na úvodu, náhled pro sdílení (og-nahled.jpg) |
 | `img/reference/` | fotky dokončených zakázek |
 | `img/sluzby/` | ilustrační fotky jednotlivých služeb |
+| `img/inzeraty/` | fotky k inzerátům (FB 1200×630, Bazoš 1000×750) |
 
 Doporučení k fotkám:
 
