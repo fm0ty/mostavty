@@ -219,6 +219,14 @@
   </url>
 
   <url>
+    <loc>https://www.mostavty.cz/rozpocet.html</loc>
+    <xhtml:link rel="alternate" hreflang="cs" href="https://www.mostavty.cz/rozpocet.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.mostavty.cz/rozpocet.html"/>
+    <lastmod>2026-10-31</lastmod>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
     <loc>https://www.mostavty.cz/reference.html</loc>
     <xhtml:link rel="alternate" hreflang="cs" href="https://www.mostavty.cz/reference.html"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.mostavty.cz/en/projects.html"/>
