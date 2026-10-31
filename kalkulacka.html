@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Spočítat cenu rekonstrukce — kalkulačka | MOstavTY</title>
+<meta name="description" content="Spočítejte si orientační cenu rekonstrukce bytu, domu nebo komerčního prostoru. Zadáte výměru a rozsah prací, kalkulačka ukáže cenu i rozpis po položkách.">
+<link rel="canonical" href="https://www.mostavty.cz/kalkulacka.html">
+
+<link rel="alternate" hreflang="cs" href="https://www.mostavty.cz/kalkulacka.html">
+<link rel="alternate" hreflang="x-default" href="https://www.mostavty.cz/kalkulacka.html">
+
+<meta property="og:type" content="website">
+<meta property="og:locale" content="cs_CZ">
+<meta property="og:site_name" content="MOstavTY">
+<meta property="og:title" content="Spočítat cenu rekonstrukce">
+<meta property="og:description" content="Orientační cena rekonstrukce za pár kliknutí, včetně rozpisu po položkách.">
+
+<meta name="theme-color" content="#1c1f24">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='5' fill='%231c1f24'/%3E%3Cpath d='M7 23V9l5 7 5-7v14' stroke='%23f07d1a' stroke-width='2.6' fill='none' stroke-linejoin='round'/%3E%3Cpath d='M21 23V9h4' stroke='%23fff' stroke-width='2.6' fill='none'/%3E%3C/svg%3E">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+
+<style>
+  /* ================= Kalkulačka — jen pro tuhle stránku =================
+     Ceny a logika výpočtu jsou v js/kalkulacka.js. Když měníte ceník na
+     stránce rozpocet.html, upravte je i tam — jsou to dvě místa.
+     ====================================================================== */
+
+  .calc { display: grid; grid-template-columns: 1fr 380px; gap: 40px; align-items: start; }
+
+  /* ---- Formulář ---- */
+  .calc__form { min-width: 0; }
+
+  .calc-group { margin-bottom: 36px; }
+  .calc-group > h2 {
+    font-size: 1.15rem;
+    margin-bottom: 4px;
+  }
+  .calc-group__hint {
+    font-size: .92rem;
+    color: var(--c-text-soft);
+    margin-bottom: 14px;
+  }
+
+  /* Volby jako tlačítka — radio i checkbox skrytý, stylujeme label */
+  .opts { display: grid; gap: 10px; }
+  .opts--2 { grid-template-columns: repeat(2, 1fr); }
+  .opts--3 { grid-template-columns: repeat(3, 1fr); }
+
+  .opt { position: relative; display: block; }
+  .opt input {
+    position: absolute;
+    opacity: 0;
+    width: 1px; height: 1px;
+    margin: 0;
+  }
+  .opt__box {
+    display: block;
+    height: 100%;
+    padding: 14px 16px;
+    background: #fff;
+    border: 1px solid var(--c-border);
+    border-radius: var(--radius);
+    cursor: pointer;
+    transition: border-color .15s var(--ease), background .15s var(--ease);
+  }
+  .opt__box:hover { border-color: var(--c-accent); }
+  .opt__t {
+    display: block;
+    font-family: var(--font-head);
+    font-size: 1.02rem;
+    font-weight: 700;
+    letter-spacing: .02em;
+    text-transform: uppercase;
+    line-height: 1.2;
+  }
+  .opt__d {
+    display: block;
+    margin-top: 3px;
+    font-size: .86rem;
+    color: var(--c-text-soft);
+    line-height: 1.35;
+  }
+  .opt input:checked + .opt__box {
+    border-color: var(--c-accent);
+    background: var(--c-accent-soft);
+    box-shadow: inset 0 0 0 1px var(--c-accent);
+  }
+  /* Obrys pro klávesnici — :focus-visible nemá IE, proto i :focus */
+  .opt input:focus + .opt__box { outline: 2px solid var(--c-accent-dark); outline-offset: 2px; }
+  .opt input:focus:not(:focus-visible) + .opt__box { outline: none; }
+  .opt input:disabled + .opt__box { opacity: .45; cursor: not-allowed; }
+  .opt input:disabled + .opt__box:hover { border-color: var(--c-border); }
+
+  /* Výměra + dispozice vedle sebe */
+  .calc-row { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+
+  /* Počítadlo (koupelny, ložnice) */
+  .count { display: flex; align-items: center; justify-content: space-between; gap: 14px; }
+  .count__label { font-size: .96rem; font-weight: 600; }
+  .count__ctrl { display: flex; align-items: center; gap: 2px; flex: 0 0 auto; }
+  .count__btn {
+    width: 38px; height: 38px;
+    display: grid; place-items: center;
+    background: #fff;
+    border: 1px solid var(--c-border);
+    border-radius: var(--radius);
+    font-size: 1.3rem;
+    line-height: 1;
+    color: var(--c-text);
+    cursor: pointer;
+  }
+  .count__btn:hover:not(:disabled) { border-color: var(--c-accent); color: var(--c-accent-dark); }
+  .count__btn:disabled { opacity: .35; cursor: not-allowed; }
+  .count__val {
+    min-width: 46px;
+    text-align: center;
+    font-family: var(--font-head);
+    font-size: 1.15rem;
+    font-weight: 700;
+  }
+
+  /* Zaškrtávací seznam profesí a doplňků */
+  .checks { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .check { position: relative; display: block; }
+  .check input { position: absolute; opacity: 0; width: 1px; height: 1px; margin: 0; }
+  .check__box {
+    display: flex;
+    gap: 11px;
+    align-items: flex-start;
+    height: 100%;
+    padding: 12px 14px;
+    background: #fff;
+    border: 1px solid var(--c-border);
+    border-radius: var(--radius);
+    cursor: pointer;
+    font-size: .95rem;
+    transition: border-color .15s var(--ease), background .15s var(--ease);
+  }
+  .check__box:hover { border-color: var(--c-accent); }
+  .check__tick {
+    flex: 0 0 auto;
+    width: 20px; height: 20px;
+    margin-top: 1px;
+    display: grid; place-items: center;
+    background: #fff;
+    border: 1.5px solid var(--c-border);
+    border-radius: 3px;
+  }
+  .check__tick svg { opacity: 0; color: #fff; }
+  .check input:checked + .check__box { border-color: var(--c-accent); background: var(--c-accent-soft); }
+  .check input:checked + .check__box .check__tick { background: var(--c-accent); border-color: var(--c-accent); }
+  .check input:checked + .check__box .check__tick svg { opacity: 1; }
+  .check input:focus + .check__box { outline: 2px solid var(--c-accent-dark); outline-offset: 2px; }
+  .check input:focus:not(:focus-visible) + .check__box { outline: none; }
+  .check input:disabled + .check__box { opacity: .45; cursor: not-allowed; }
+  .check__name { display: block; font-weight: 600; line-height: 1.3; }
+  .check__price { display: block; margin-top: 2px; font-size: .85rem; color: var(--c-text-soft); }
+
+  /* ---- Výsledek ---- */
+  .calc__out { position: sticky; top: calc(var(--header-h) + 20px); }
+
+  .result {
+    background: var(--c-dark);
+    color: var(--c-text-invert);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+  }
+  .result__head { padding: 24px 24px 20px; border-bottom: 1px solid var(--c-dark-line); }
+  .result__label {
+    font-family: var(--font-head);
+    font-size: .82rem;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--c-text-invert-soft);
+    margin-bottom: 6px;
+  }
+  .result__total {
+    font-family: var(--font-head);
+    font-size: 2.3rem;
+    font-weight: 700;
+    line-height: 1.05;
+    letter-spacing: .01em;
+  }
+  .result__vat { margin-top: 8px; font-size: .92rem; color: var(--c-text-invert-soft); }
+  .result__vat strong { color: var(--c-text-invert); font-weight: 600; }
+
+  .result__body { padding: 20px 24px 24px; }
+  .result__sub {
+    font-family: var(--font-head);
+    font-size: .82rem;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--c-text-invert-soft);
+    margin-bottom: 10px;
+  }
+
+  .rows { list-style: none; margin: 0 0 4px; padding: 0; font-size: .94rem; }
+  .rows li {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 7px 0;
+    border-bottom: 1px solid var(--c-dark-line);
+  }
+  .rows li:last-child { border-bottom: 0; }
+  .rows__v { white-space: nowrap; font-weight: 600; }
+  .rows li[data-sum] { margin-top: 6px; border-top: 2px solid var(--c-dark-line); border-bottom: 0; padding-top: 12px; }
+  .rows li[data-sum] .rows__k,
+  .rows li[data-sum] .rows__v { font-weight: 700; }
+
+  .result__time {
+    margin-top: 18px;
+    padding-top: 16px;
+    border-top: 1px solid var(--c-dark-line);
+    font-size: .92rem;
+    color: var(--c-text-invert-soft);
+  }
+  .result__time strong { color: var(--c-text-invert); font-weight: 600; }
+
+  .result__cta { margin-top: 20px; display: grid; gap: 10px; }
+  .result__cta .btn { width: 100%; text-align: center; }
+
+  .result__min {
+    margin-top: 14px;
+    padding: 12px 14px;
+    background: rgba(240, 125, 26, .14);
+    border-left: 3px solid var(--c-accent);
+    border-radius: var(--radius);
+    font-size: .88rem;
+    color: var(--c-text-invert);
+  }
+
+  .result__note { margin-top: 14px; font-size: .84rem; color: var(--c-text-invert-soft); line-height: 1.5; }
+  .result__note a { color: var(--c-text-invert); }
+
+  /* Prázdný stav, dokud zákazník nevybere typ a rozsah */
+  .result--empty .result__total { font-size: 1.5rem; color: var(--c-text-invert-soft); }
+
+  /* ---- Mobil ---- */
+  @media (max-width: 960px) {
+    .calc { grid-template-columns: 1fr; gap: 28px; }
+    /* Výsledek nad formulářem, ať je cena vidět hned */
+    .calc__out { position: static; order: -1; }
+    .result__total { font-size: 2rem; }
+  }
+  @media (max-width: 560px) {
+    .opts--2, .opts--3, .checks, .calc-row { grid-template-columns: 1fr; }
+    .result__head, .result__body { padding-left: 18px; padding-right: 18px; }
+  }
+
+  /* Bez JS kalkulačka nefunguje — řekneme to a nabídneme ceník */
+  .calc-nojs { display: none; }
+  .no-js .calc-nojs { display: block; }
+  .no-js .calc { display: none; }
+</style>
+</head>
+<body class="no-js">
+
+<a class="skip-link" href="#main">Přeskočit na obsah</a>
+
+<header class="header">
+  <div class="wrap header__inner">
+    <a class="logo" href="index.html" aria-label="MOstavTY — domovská stránka">
+      <svg class="logo__mark" width="34" height="34" viewBox="0 0 32 32" aria-hidden="true">
+        <rect width="32" height="32" rx="5" fill="#f07d1a"/>
+        <path d="M7 23V9l5 7 5-7v14" stroke="#1c1f24" stroke-width="2.6" fill="none" stroke-linejoin="round"/>
+        <path d="M21 23V9h4" stroke="#fff" stroke-width="2.6" fill="none"/>
+      </svg>
+      <span>MO<span class="logo__accent">stav</span>TY</span>
+    </a>
+
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav" aria-label="Otevřít menu">
+      <span class="nav-toggle__bar"></span>
+      <span class="nav-toggle__bar"></span>
+      <span class="nav-toggle__bar"></span>
+    </button>
+
+    <nav class="nav" id="nav" aria-label="Hlavní navigace">
+      <a class="nav__link" href="index.html">Úvod</a>
+      <a class="nav__link" href="sluzby.html">Služby</a>
+      <a class="nav__link" href="rozpocet.html">Rozpočty</a>
+      <a class="nav__link" href="kalkulacka.html">Kalkulačka</a>
+      <a class="nav__link" href="reference.html">Reference</a>
+      <a class="nav__link" href="o-nas.html">O nás</a>
+      <a class="nav__link" href="kontakt.html">Kontakt</a>
+      <span class="header__cta">
+        <a class="btn" href="tel:+420123456789">+420 123 456 789</a>
+      </span>
+      <span class="lang">
+        <a class="lang__link" href="index.html" hreflang="cs" aria-current="true">CZ</a>
+        <a class="lang__link" href="en/index.html" hreflang="en" lang="en">EN</a>
+        <a class="lang__link" href="de/index.html" hreflang="de" lang="de">DE</a>
+      </span>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+  <section class="page-hero">
+    <div class="wrap">
+      <nav class="breadcrumb" aria-label="Drobečková navigace">
+        <ol>
+          <li><a href="index.html">Úvod</a></li>
+          <li><a href="rozpocet.html">Rozpočty</a></li>
+          <li><span aria-current="page">Kalkulačka</span></li>
+        </ol>
+      </nav>
+      <h1>Spočítat cenu rekonstrukce</h1>
+      <p class="lead">
+        Zadejte výměru a vyberte, co se má dělat. Cena se přepočítává hned a
+        uvidíte i rozpis po položkách. Počítáme ze stejných cen, jaké máme
+        na stránce <a href="rozpocet.html">Rozpočty</a>.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+
+      <!-- Bez JavaScriptu kalkulačka nespočítá nic — nabídneme ceník -->
+      <noscript>
+        <div class="card" style="margin-bottom:32px">
+          <div class="card__body">
+            <h2>Kalkulačka potřebuje JavaScript</h2>
+            <p>
+              Ve vašem prohlížeči je vypnutý JavaScript, takže se cena nespočítá.
+              Všechny ceny najdete v tabulkách na stránce Rozpočty, nebo nám
+              zavolejte a spočítáme to s vámi.
+            </p>
+            <div class="btn-row">
+              <a class="btn" href="rozpocet.html">Ceník v tabulkách</a>
+              <a class="btn btn--ghost" href="tel:+420123456789">+420 123 456 789</a>
+            </div>
+          </div>
+        </div>
+      </noscript>
+
+      <div class="calc-nojs card" style="margin-bottom:32px">
+        <div class="card__body">
+          <h2>Kalkulačka se nenačetla</h2>
+          <p>
+            Nepodařilo se spustit výpočet. Všechny ceny najdete v tabulkách
+            na stránce Rozpočty, nebo nám zavolejte.
+          </p>
+          <div class="btn-row">
+            <a class="btn" href="rozpocet.html">Ceník v tabulkách</a>
+            <a class="btn btn--ghost" href="tel:+420123456789">+420 123 456 789</a>
+          </div>
+        </div>
+      </div>
+
+      <form class="calc" data-calc novalidate>
+
+        <!-- ================= FORMULÁŘ ================= -->
+        <div class="calc__form">
+
+          <!-- 1. Typ nemovitosti -->
+          <fieldset class="calc-group">
+            <legend class="visually-hidden">Typ nemovitosti</legend>
+            <h2>Co rekonstruujeme</h2>
+            <p class="calc-group__hint">Podle typu se liší cena za metr i DPH.</p>
+            <div class="opts opts--3">
+              <label class="opt">
+                <input type="radio" name="propertyType" value="byt" checked>
+                <span class="opt__box">
+                  <span class="opt__t">Byt</span>
+                  <span class="opt__d">Bytová jednotka v panelovém nebo cihlovém domě</span>
+                </span>
+              </label>
+              <label class="opt">
+                <input type="radio" name="propertyType" value="dum">
+                <span class="opt__box">
+                  <span class="opt__t">Rodinný dům</span>
+                  <span class="opt__d">Samostatný, řadový nebo dvojdomek</span>
+                </span>
+              </label>
+              <label class="opt">
+                <input type="radio" name="propertyType" value="komercni">
+                <span class="opt__box">
+                  <span class="opt__t">Komerční prostor</span>
+                  <span class="opt__d">Kancelář, obchod nebo provozovna</span>
+                </span>
+              </label>
+            </div>
+          </fieldset>
+
+          <!-- 2. Rozsah prací -->
+          <fieldset class="calc-group">
+            <legend class="visually-hidden">Rozsah prací</legend>
+            <h2>Rozsah prací</h2>
+            <p class="calc-group__hint">
+              U rekonstrukce na klíč jsou koupelna i kuchyň už v ceně za metr.
+            </p>
+            <div class="opts opts--2" data-scope-opts>
+              <label class="opt">
+                <input type="radio" name="scope" value="komplet" checked>
+                <span class="opt__box">
+                  <span class="opt__t">Kompletní na klíč</span>
+                  <span class="opt__d">Všechny profese, rozvody, podlahy i povrchy</span>
+                </span>
+              </label>
+              <label class="opt">
+                <input type="radio" name="scope" value="castecna">
+                <span class="opt__box">
+                  <span class="opt__t">Částečná rekonstrukce</span>
+                  <span class="opt__d">Vyberete si místnosti a profese</span>
+                </span>
+              </label>
+              <label class="opt">
+                <input type="radio" name="scope" value="koupelna">
+                <span class="opt__box">
+                  <span class="opt__t">Pouze koupelna a WC</span>
+                  <span class="opt__d">Kompletní přestavba koupelny</span>
+                </span>
+              </label>
+              <label class="opt" data-scope-jadro>
+                <input type="radio" name="scope" value="jadro">
+                <span class="opt__box">
+                  <span class="opt__t">Bytové jádro</span>
+                  <span class="opt__d">Výměna umakartového jádra za zděné (jen byt)</span>
+                </span>
+              </label>
+            </div>
+          </fieldset>
+
+          <!-- 3. Parametry -->
+          <fieldset class="calc-group" data-group-params>
+            <legend class="visually-hidden">Parametry nemovitosti</legend>
+            <h2>Parametry</h2>
+            <p class="calc-group__hint">
+              Výměra je podlahová plocha, kterou se bude rekonstruovat.
+            </p>
+
+            <div class="calc-row" style="margin-bottom:20px">
+              <div class="field">
+                <label for="c-area">Výměra v m²</label>
+                <input type="number" id="c-area" name="area" value="68" min="20" max="400" step="1"
+                       inputmode="numeric" aria-describedby="c-area-hint">
+                <span class="field__hint" id="c-area-hint">Od 20 do 400 m²</span>
+              </div>
+              <div class="field" data-field-layout>
+                <label for="c-layout">Dispozice</label>
+                <select id="c-layout" name="layout">
+                  <option value="1kk">1+kk</option>
+                  <option value="1_1">1+1</option>
+                  <option value="2kk">2+kk</option>
+                  <option value="2_1">2+1</option>
+                  <option value="3kk">3+kk</option>
+                  <option value="3_1" selected>3+1</option>
+                  <option value="4kk">4+kk</option>
+                  <option value="4_1">4+1</option>
+                  <option value="5plus">5+1 a větší</option>
+                  <option value="atyp">Atypický</option>
+                </select>
+                <span class="field__hint">Podle ní se určuje cena kuchyňské linky</span>
+              </div>
+            </div>
+
+            <div data-group-building>
+              <p class="calc-group__hint" style="font-weight:600;color:var(--c-text)">Typ domu</p>
+              <div class="opts opts--2" style="margin-bottom:20px">
+                <label class="opt">
+                  <input type="radio" name="buildingType" value="panel" checked>
+                  <span class="opt__box">
+                    <span class="opt__t">Panelový dům</span>
+                    <span class="opt__d">Typová panelová výstavba · základní cena</span>
+                  </span>
+                </label>
+                <label class="opt">
+                  <input type="radio" name="buildingType" value="cihla">
+                  <span class="opt__box">
+                    <span class="opt__t">Cihlový činžovní</span>
+                    <span class="opt__d">Zděný dům do roku 1960 · +12 %</span>
+                  </span>
+                </label>
+                <label class="opt">
+                  <input type="radio" name="buildingType" value="novostavba">
+                  <span class="opt__box">
+                    <span class="opt__t">Novostavba</span>
+                    <span class="opt__d">Dokončeno po roce 2000 · −10 %</span>
+                  </span>
+                </label>
+                <label class="opt">
+                  <input type="radio" name="buildingType" value="rodinny">
+                  <span class="opt__box">
+                    <span class="opt__t">Zděný rodinný dům</span>
+                    <span class="opt__d">Zděný nebo skeletový · +5 %</span>
+                  </span>
+                </label>
+              </div>
+            </div>
+
+            <p class="calc-group__hint" style="font-weight:600;color:var(--c-text)">Přístup</p>
+            <div class="opts opts--3">
+              <label class="opt">
+                <input type="radio" name="floorAccess" value="prizemi" checked>
+                <span class="opt__box">
+                  <span class="opt__t">Přízemí</span>
+                  <span class="opt__d">Přímý přístup · základní cena</span>
+                </span>
+              </label>
+              <label class="opt">
+                <input type="radio" name="floorAccess" value="vytah">
+                <span class="opt__box">
+                  <span class="opt__t">Patro s výtahem</span>
+                  <span class="opt__d">Materiál i suť výtahem</span>
+                </span>
+              </label>
+              <label class="opt">
+                <input type="radio" name="floorAccess" value="bezVytahu">
+                <span class="opt__box">
+                  <span class="opt__t">Patro bez výtahu</span>
+                  <span class="opt__d">Ruční vynášení · +4 %</span>
+                </span>
+              </label>
+            </div>
+          </fieldset>
+
+          <!-- 4. Místnosti -->
+          <fieldset class="calc-group" data-group-rooms>
+            <legend class="visually-hidden">Místnosti</legend>
+            <h2>Místnosti</h2>
+            <p class="calc-group__hint" data-rooms-hint>
+              U rekonstrukce na klíč určují, jak se cena rozdělí po položkách.
+            </p>
+
+            <div class="checks" style="margin-bottom:16px">
+              <div class="count" style="grid-column:1/-1">
+                <span class="count__label" id="c-bath-l">Počet koupelen</span>
+                <span class="count__ctrl">
+                  <button class="count__btn" type="button" data-count-btn="koupelna" data-dir="-1"
+                          aria-label="Ubrat koupelnu">−</button>
+                  <output class="count__val" data-count-val="koupelna" aria-labelledby="c-bath-l">1</output>
+                  <button class="count__btn" type="button" data-count-btn="koupelna" data-dir="1"
+                          aria-label="Přidat koupelnu">+</button>
+                </span>
+              </div>
+            </div>
+
+            <div class="checks">
+              <label class="check">
+                <input type="checkbox" name="room" value="wc" checked>
+                <span class="check__box">
+                  <span class="check__tick">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                         stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <path d="M20 6 9 17l-5-5"/>
+                    </svg>
+                  </span>
+                  <span>
+                    <span class="check__name">Samostatné WC</span>
+                    <span class="check__price" data-price-wc></span>
+                  </span>
+                </span>
+              </label>
+              <label class="check">
+                <input type="checkbox" name="room" value="kuchyne" checked>
+                <span class="check__box">
+                  <span class="check__tick">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                         stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <path d="M20 6 9 17l-5-5"/>
+                    </svg>
+                  </span>
+                  <span>
+                    <span class="check__name">Kuchyň</span>
+                    <span class="check__price" data-price-kuchyne></span>
+                  </span>
+                </span>
+              </label>
+            </div>
+          </fieldset>
+
+          <!-- 5. Profese -->
+          <fieldset class="calc-group" data-group-trades>
+            <legend class="visually-hidden">Profese a práce</legend>
+            <h2>Které práce chcete</h2>
+            <p class="calc-group__hint" data-trades-hint>
+              U rekonstrukce na klíč je vybráno všechno. Když něco odškrtnete,
+              cena se o jeho podíl sníží.
+            </p>
+            <div class="checks" data-trades></div>
+          </fieldset>
+
+          <!-- 6. Standard -->
+          <fieldset class="calc-group">
+            <legend class="visually-hidden">Standard materiálů</legend>
+            <h2>Standard materiálů</h2>
+            <p class="calc-group__hint">
+              Co který stupeň znamená, rozepisujeme na stránce
+              <a href="rozpocet.html#standardy">Rozpočty</a>.
+            </p>
+            <div class="opts opts--3">
+              <label class="opt">
+                <input type="radio" name="standard" value="standard" checked>
+                <span class="opt__box">
+                  <span class="opt__t">Standard</span>
+                  <span class="opt__d">Nejčastější volba. Kvalitní česká a evropská značka.</span>
+                </span>
+              </label>
+              <label class="opt">
+                <input type="radio" name="standard" value="nadstandard">
+                <span class="opt__box">
+                  <span class="opt__t">Nadstandard</span>
+                  <span class="opt__d">Velkoformátové obklady, dřevěné podlahy.</span>
+                </span>
+              </label>
+              <label class="opt">
+                <input type="radio" name="standard" value="premium">
+                <span class="opt__box">
+                  <span class="opt__t">Prémiový</span>
+                  <span class="opt__d">Materiály na míru, kámen, truhlářské prvky.</span>
+                </span>
+              </label>
+            </div>
+          </fieldset>
+
+          <!-- 7. Služby navíc -->
+          <fieldset class="calc-group">
+            <legend class="visually-hidden">Služby navíc</legend>
+            <h2>Služby navíc</h2>
+            <p class="calc-group__hint">Nepovinné. Zaměření a konzultace jsou vždy zdarma.</p>
+            <div class="checks" data-extras></div>
+          </fieldset>
+
+          <!-- 8. Plátce DPH — jen komerční prostor -->
+          <fieldset class="calc-group" data-group-vat hidden>
+            <legend class="visually-hidden">Plátce DPH</legend>
+            <h2>Jste plátce DPH?</h2>
+            <p class="calc-group__hint">
+              U komerčních prostor se při přenesené daňové povinnosti DPH
+              neúčtuje.
+            </p>
+            <div class="opts opts--2">
+              <label class="opt">
+                <input type="radio" name="vatPayer" value="ne" checked>
+                <span class="opt__box">
+                  <span class="opt__t">Nejsme plátce</span>
+                  <span class="opt__d">Cena včetně 21 % DPH</span>
+                </span>
+              </label>
+              <label class="opt">
+                <input type="radio" name="vatPayer" value="ano">
+                <span class="opt__box">
+                  <span class="opt__t">Jsme plátce DPH</span>
+                  <span class="opt__d">Uplatní se přenesená daňová povinnost</span>
+                </span>
+              </label>
+            </div>
+          </fieldset>
+
+        </div>
+
+        <!-- ================= VÝSLEDEK ================= -->
+        <div class="calc__out">
+          <div class="result" data-result>
+            <div class="result__head">
+              <p class="result__label">Orientační cena bez DPH</p>
+              <p class="result__total" data-total aria-live="polite">—</p>
+              <p class="result__vat" data-vat></p>
+            </div>
+            <div class="result__body">
+              <p class="result__sub">Z čeho se cena skládá</p>
+              <ul class="rows" data-rows></ul>
+              <p class="result__time" data-time></p>
+              <div class="result__min" data-min hidden></div>
+
+              <div class="result__cta">
+                <a class="btn" href="kontakt.html" data-send>Poslat tuhle kalkulaci</a>
+                <a class="btn btn--outline" href="tel:+420123456789">Zavolat +420 123 456 789</a>
+              </div>
+
+              <p class="result__note">
+                Cena je orientační a nenahrazuje rozpočet. Konečnou cenu
+                potvrdíme po prohlídce. Ceny vycházejí z
+                <a href="rozpocet.html">našeho ceníku</a>.
+              </p>
+            </div>
+          </div>
+        </div>
+
+      </form>
+
+    </div>
+  </section>
+
+  <!-- ======================= CO CENA ZAHRNUJE ======================= -->
+  <section class="section section--alt">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">Dobré vědět</p>
+        <h2>Co je v ceně a co ne</h2>
+      </div>
+
+      <div class="grid grid--2" style="align-items:start">
+        <div>
+          <h3>V ceně je</h3>
+          <ul class="checklist">
+            <li>Práce i materiál</li>
+            <li>Koordinace, stavební dozor a zařízení stavby</li>
+            <li>Rezerva 10 % na nepředvídané práce — co se nevyčerpá, nefakturujeme</li>
+            <li>Odvoz a likvidace suti</li>
+            <li>Zaměření a úvodní konzultace zdarma</li>
+            <li>Záruka na provedené práce</li>
+          </ul>
+        </div>
+        <div>
+          <h3>V ceně není</h3>
+          <ul class="checklist">
+            <li>Kuchyňská linka a spotřebiče — připočítáte si je v kalkulačce</li>
+            <li>Nábytek na míru mimo kuchyň</li>
+            <li>Architektonický návrh a projektová dokumentace</li>
+            <li>Okna, klimatizace a rekuperace — ty se účtují vždy navíc</li>
+            <li>Správní poplatky a povolení</li>
+            <li>Vybavení, spotřebiče a dekorace</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================= CTA ======================= -->
+  <section class="cta-band">
+    <div class="wrap cta-band__inner">
+      <div>
+        <h2>Chcete cenu na papíře?</h2>
+        <p>
+          Přijedeme na prohlídku a do dvou pracovních dnů pošleme rozpočet
+          rozepsaný po položkách. Nezávazně.
+        </p>
+      </div>
+      <a class="btn btn--lg" href="kontakt.html">Domluvit prohlídku</a>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <div class="wrap footer__main">
+    <div class="footer__about">
+      <a class="logo" href="index.html">
+        <svg class="logo__mark" width="32" height="32" viewBox="0 0 32 32" aria-hidden="true">
+          <rect width="32" height="32" rx="5" fill="#f07d1a"/>
+          <path d="M7 23V9l5 7 5-7v14" stroke="#1c1f24" stroke-width="2.6" fill="none" stroke-linejoin="round"/>
+          <path d="M21 23V9h4" stroke="#fff" stroke-width="2.6" fill="none"/>
+        </svg>
+        <span>MO<span class="logo__accent">stav</span>TY</span>
+      </a>
+      <p>
+        Stavební firma se specializací na kompletní rekonstrukce domů a bytů.
+        Působíme na Vysočině a v Praze.
+      </p>
+    </div>
+    <div>
+      <h4>Služby</h4>
+      <ul>
+        <li><a href="sluzby/rekonstrukce-bytu.html">Rekonstrukce bytu</a></li>
+        <li><a href="sluzby/rekonstrukce-domu.html">Rekonstrukce domu</a></li>
+        <li><a href="sluzby/sadrokarton.html">Sádrokartony</a></li>
+        <li><a href="sluzby/stuky-omitky.html">Štuky a omítky</a></li>
+        <li><a href="sluzby/podlahy.html">Podlahy</a></li>
+        <li><a href="sluzby.html">Všechny služby</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Firma</h4>
+      <ul>
+        <li><a href="o-nas.html">O nás</a></li>
+        <li><a href="reference.html">Reference</a></li>
+        <li><a href="rozpocet.html">Rozpočty</a></li>
+        <li><a href="kalkulacka.html">Kalkulačka</a></li>
+        <li><a href="kontakt.html">Kontakt</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Kontakt</h4>
+      <ul>
+        <li><a href="tel:+420123456789">+420 123 456 789</a></li>
+        <li><a href="mailto:info@mostavty.cz">info@mostavty.cz</a></li>
+        <li>Ulice 123, 586 01 Jihlava</li>
+        <li>IČO: 00000000</li>
+        <li>Po–Pá 7:00–17:00</li>
+      </ul>
+    </div>
+  </div>
+  <div class="wrap footer__bottom">
+    <p>&copy; <span data-year>2026</span> MOstavTY. Všechna práva vyhrazena.</p>
+    <div class="footer__legal">
+      <a href="ochrana-osobnich-udaju.html">Ochrana osobních údajů</a>
+    </div>
+  </div>
+</footer>
+
+<a class="call-fab" href="tel:+420123456789" aria-label="Zavolat">
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+    <path d="M6.6 10.8c1 2 2.6 3.6 4.6 4.6l2.3-2.3c.3-.3.7-.4 1.1-.3 1.1.4 2.3.6 3.5.6.6 0 1 .4 1 1V18c0 .6-.4 1-1 1-8.3 0-15-6.7-15-15 0-.6.4-1 1-1h3.6c.6 0 1 .4 1 1 0 1.2.2 2.4.6 3.5.1.4 0 .8-.3 1.1z"/>
+  </svg>
+  Zavolat
+</a>
+
+<script src="js/main.js" defer></script>
+<script src="js/kalkulacka.js" defer></script>
+</body>
+</html>

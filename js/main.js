@@ -564,15 +564,26 @@
          kontakt.html?sluzba=sadrokarton a formulář se nastaví sám.
      ====================================================================== */
   function initPrefill() {
-    var select = document.querySelector('[data-form] select[name="service"]');
-    if (!select || !window.URLSearchParams) { return; }
+    var form = document.querySelector('[data-form]');
+    if (!form || !window.URLSearchParams) { return; }
 
-    var param = new URLSearchParams(window.location.search).get('sluzba');
-    if (!param) { return; }
+    var params = new URLSearchParams(window.location.search);
 
-    Array.prototype.forEach.call(select.options, function (opt) {
-      if (opt.value === param) { select.value = param; }
-    });
+    var select = form.querySelector('select[name="service"]');
+    var sluzba = params.get('sluzba');
+    if (select && sluzba) {
+      Array.prototype.forEach.call(select.options, function (opt) {
+        if (opt.value === sluzba) { select.value = sluzba; }
+      });
+    }
+
+    /* Kalkulačka posílá spočítaný rozpis do popisu záměru:
+       kontakt.html?sluzba=…&zprava=… */
+    var message = form.querySelector('textarea[name="message"]');
+    var zprava = params.get('zprava');
+    if (message && zprava && !message.value) {
+      message.value = zprava;
+    }
   }
 
   /* ======================================================================
